@@ -1,0 +1,73 @@
+{
+    "description": "Markov reward used for HER, must satisfy: task.step_frequence * terminations.RT.integral_time_length == 1",
+    "flag_str": "Train",
+    "debug_mode": true,
+    "task": {
+        "h0": 5000,
+        "v0": 200,
+        "step_frequence": 10,
+        "max_simulate_time": 40,
+        "gamma": 0.995
+    },
+    "goal": {
+        "use_fixed_goal": false,
+        "goal_v": 0,
+        "goal_mu": 0,
+        "goal_chi": 0,
+        "sample_random": true,
+        "v_min": 100.0,
+        "v_max": 300.0,
+        "mu_min": -90.0,
+        "mu_max": 90.0,
+        "chi_min": -180.0,
+        "chi_max": 180.0,
+        "available_goals_file": "res.csv",
+        "sample_reachable_goal": false,
+        "sample_goal_noise_std": [5, 0.5, 0.5]
+    },
+    "rewards": {
+        "dense": {
+            "use": true,
+            "b": 0.5
+        }
+    },
+    "terminations": {
+        "RT_SINGLE_STEP": {
+            "use": true,
+            "v_threshold": 10,
+            "angle_threshold": 3,
+            "termination_reward": 0.0
+        },
+        "C": {
+            "use": true,
+            "h0": 0,
+            "is_termination_reward_based_on_steps_left": true,
+            "termination_reward": -1
+        },
+        "ES": {
+            "use": true,
+            "v_max": 400,
+            "p_max": 300,
+            "is_termination_reward_based_on_steps_left": true,
+            "termination_reward": -1
+        },
+        "T": {
+            "use": true,
+            "termination_reward": -1
+        },
+        "CR": {
+            "use": true,
+            "continuousely_roll_threshold": 720,
+            "is_termination_reward_based_on_steps_left": true,
+            "termination_reward": -1
+        },
+        "NOBR": {
+            "use": true,
+            "time_window": 2,
+            "negative_overload_threshold": 0,
+            "big_phi_threshold": 60,
+            "is_termination_reward_based_on_steps_left": true,
+            "termination_reward": -1
+        }
+    }
+}
