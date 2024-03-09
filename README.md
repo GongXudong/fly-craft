@@ -9,7 +9,7 @@ TODO:
 ### Using PyPI
 
 ```bash
-pip install fly-craft
+pip install flycraft
 ```
 
 ### From source
