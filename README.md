@@ -15,7 +15,7 @@ pip install fly-craft
 ### From source
 
 ```bash
-git clone https://github.com/gongxudong/fly-craft.git
+git clone https://github.com/GongXudong/fly-craft.git
 pip install -e fly-craft
 ```
 
@@ -23,7 +23,7 @@ pip install -e fly-craft
 
 ```python
 import gymnasium as gym
-import fly_craft
+import flycraft
 
 env = gym.make('FlyCraft-v0')
 

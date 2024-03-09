@@ -4,3 +4,5 @@ _build/
 build/
 *.egg-info
 dist/
+
+f16trace.csv

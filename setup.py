@@ -18,9 +18,9 @@ setup(
     url="https://github.com/gongxudong/fly-craft",
     packages=find_packages(),
     include_package_data=True,
-    package_data={"flycraft": ["version.txt"]},
+    # package_data={"flycraft": ["version.txt"]},
     version=__version__,
-    install_requires=["gymnasium>=0.26", "numpy", "scipy"],
+    install_requires=["gymnasium>=0.26", "numpy", "pandas"],
     extras_require={
         "develop": ["pytest-cov", "black", "isort", "pytype", "sphinx", "sphinx-rtd-theme"],
     },

@@ -25,8 +25,6 @@ from terminations.reach_target_termination import ReachTargetTermination
 from terminations.reach_target_termination2 import ReachTargetTermination2
 from terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
 
-from stable_baselines3.her import HerReplayBuffer
-from stable_baselines3.common.envs import BitFlippingEnv
 
 class FlyCraftEnv(gym.Env):
 
