@@ -1,7 +1,6 @@
 import os
 import sys
 from pathlib import Path
-import pandas as pd
 from math import radians, sin, cos
 
 PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent

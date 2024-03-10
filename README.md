@@ -1,8 +1,10 @@
 # fly-craft
 
-## Documentation
+An efficient goal-conditioned reinforcement learning environment for fixed-wing UAV attitude control.
 
-TODO:
+[![PyPI version](https://img.shields.io/pypi/v/flycraft.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/flycraft/)
+[![Downloads](https://static.pepy.tech/badge/flycraft)](https://pepy.tech/project/flycraft)
+[![GitHub](https://img.shields.io/github/license/gongxudong/fly-craft.svg)](LICENSE.txt)
 
 ## Installation
 
@@ -39,13 +41,17 @@ for _ in range(500):
 env.close()
 ```
 
+## Documentation
+
+TODO:
+
 ## Citation
 
 Cite as
 
 ```bib
 @article{gong2024flycraft,
-  title        = {fly-craft: Open-Source Goal-Conditioned Environments for Fixed-Wing UAV Attitude Control},
+  title        = {fly-craft: An Efficient Goal-Conditioned Environment for Fixed-Wing UAV Attitude Control},
   author       = {Xudong, Gong and Hao, Wang and Dawei, Feng and Weijia, Wang},
   year         = 2024,
   journal      = {},

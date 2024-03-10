@@ -5,4 +5,5 @@ build/
 *.egg-info
 dist/
 
+flycraft/planes/utils/logs/guideInOut.csv
 f16trace.csv
