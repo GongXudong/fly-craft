@@ -1,11 +1,10 @@
 import logging
 from pathlib import Path
 
-THIS_FILE_PATH = Path(__file__)
-PROJECT_ROOT_DIR = THIS_FILE_PATH.parent.parent
+PROJECT_ROOT_DIR = Path(__file__).parent.parent
 
-def get_logger(logger_name:str="ucav", log_file_name:str="my_logs/my_sys_logs.log"):
-    handler_file = logging.FileHandler(PROJECT_ROOT_DIR / log_file_name)  # stdout to file
+def get_logger(logger_name:str="ucav", log_file_dir: Path=PROJECT_ROOT_DIR / "my_logs" / "my_sys_logs.log"):
+    handler_file = logging.FileHandler(log_file_dir)  # stdout to file
     handler_control = logging.StreamHandler()    # stdout to console
     handler_file.setLevel('DEBUG')               # 设置级别: DEBUG 、INFO 、WARNING、ERROR、CRITICAL
     handler_control.setLevel('DEBUG')             

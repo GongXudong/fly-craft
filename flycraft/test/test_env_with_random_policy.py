@@ -17,7 +17,7 @@ class FlyCraftEnvRandomSampleTest(unittest.TestCase):
         self.env = FlyCraftEnv(
             config_file=PROJECT_ROOT_DIR / "configs" / "MR_for_HER.json",
             custom_config={
-                "debug_mode": False
+                "debug_mode": True
             }
         )
 

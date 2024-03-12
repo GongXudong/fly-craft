@@ -58,8 +58,8 @@ class GoalSampler(object):
                 self.goal_mu = self.np_random.uniform(low=self.env_config["goal"]["mu_min"], high=self.env_config["goal"]["mu_max"])
                 self.goal_chi = self.np_random.uniform(low=self.env_config["goal"]["chi_min"], high=self.env_config["goal"]["chi_max"])
 
-                if self.debug_mode:
-                    print(f"In sampler, sample randomly: {self.goal_v}, {self.goal_mu}, {self.goal_chi}")
+                # if self.debug_mode:
+                #     print(f"In sampler, sample randomly: {self.goal_v}, {self.goal_mu}, {self.goal_chi}")
             else:
                 if self.sample_reachable_goal:
                     while True:
@@ -75,8 +75,8 @@ class GoalSampler(object):
                             self.goal_expert_length = tmp_goal[3]
                             break
 
-                    if self.debug_mode:
-                        print(f"In sampler: sample reachable goal: {self.goal_v}, {self.goal_mu}, {self.goal_chi}, {self.goal_expert_length}")
+                    # if self.debug_mode:
+                    #     print(f"In sampler: sample reachable goal: {self.goal_v}, {self.goal_mu}, {self.goal_chi}, {self.goal_expert_length}")
                 else:
                     tmp_goal = self.np_random.choice(self.available_goals, 1).squeeze()
                     sampled_noise = self.sample_noise()
@@ -86,8 +86,8 @@ class GoalSampler(object):
                     self.goal_chi = tmp_goal[2] + sampled_noise[2]
                     self.goal_expert_length = tmp_goal[3]
 
-                    if self.debug_mode:
-                        print(f"In sampler, sample available goal: {self.goal_v}, {self.goal_mu}, {self.goal_chi}, {self.goal_expert_length}")
+                    # if self.debug_mode:
+                    #     print(f"In sampler, sample available goal: {self.goal_v}, {self.goal_mu}, {self.goal_chi}, {self.goal_expert_length}")
 
         return {
             "v": self.goal_v,

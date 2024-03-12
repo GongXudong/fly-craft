@@ -177,10 +177,10 @@ class FlyCraftEnv(gym.Env):
                 if self.debug_mode:
                     if isinstance(t_func, ReachTargetTermination) or isinstance(t_func, ReachTargetTermination2):
                         # reach target, 绿色打印
-                        print(f"print, {self.flag_str}, ", f"\033[32m{str(t_func)}。\033[0m", f"steps: {self.step_cnt}。target: ({desired_goal[0]}, {desired_goal[1]}, {desired_goal[2]})。expert steps: {self.task.goal_sampler.goal_expert_length}。")
+                        print(f"print, {self.flag_str}, \033[32m{str(t_func)}。\033[0m steps: {self.step_cnt}。target: ({desired_goal[0]:.2f}, {desired_goal[1]:.2f}, {desired_goal[2]:.2f})。achieved target: ({plane_state_dict['v']:.2f}, {plane_state_dict['mu']:.2f}, {plane_state_dict['chi']:.2f})。expert steps: {self.task.goal_sampler.goal_expert_length}。")
                     else:
                         # 其它终止条件，红色打印
-                        print(f"print, {self.flag_str}, ", f'\033[31m{str(t_func)}。\033[0m', f"steps: {self.step_cnt}。target: ({desired_goal[0]}, {desired_goal[1]}, {desired_goal[2]})。expert steps: {self.task.goal_sampler.goal_expert_length}。")
+                        print(f"print, {self.flag_str}, \033[31m{str(t_func)}。\033[0m steps: {self.step_cnt}。target: ({desired_goal[0]:.2f}, {desired_goal[1]:.2f}, {desired_goal[2]:.2f})。achieved target: ({plane_state_dict['v']:.2f}, {plane_state_dict['mu']:.2f}, {plane_state_dict['chi']:.2f})。expert steps: {self.task.goal_sampler.goal_expert_length}。")
 
                 if "rewards" not in info:
                     info["rewards"] = {}
