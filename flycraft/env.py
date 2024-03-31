@@ -175,7 +175,7 @@ class FlyCraftEnv(gym.Env):
                     info['is_success'] = True
 
                 if self.debug_mode:
-                    if isinstance(t_func, ReachTargetTermination) or isinstance(t_func, ReachTargetTermination2):
+                    if isinstance(t_func, ReachTargetTermination) or isinstance(t_func, ReachTargetTermination2) or isinstance(t_func, ReachTargetTerminationSingleStep):
                         # reach target, 绿色打印
                         print(f"print, {self.flag_str}, \033[32m{str(t_func)}。\033[0m steps: {self.step_cnt}。target: ({desired_goal[0]:.2f}, {desired_goal[1]:.2f}, {desired_goal[2]:.2f})。achieved target: ({plane_state_dict['v']:.2f}, {plane_state_dict['mu']:.2f}, {plane_state_dict['chi']:.2f})。expert steps: {self.task.goal_sampler.goal_expert_length}。")
                     else:

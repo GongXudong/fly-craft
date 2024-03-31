@@ -19,10 +19,21 @@ class DenseRewardBasedOnAngleAndVelocity(RewardBase):
     Args:
         RewardBase (_type_): _description_
     """
-    def __init__(self, b: float = 1., angle_scale: float = 180., velocity_scale: float = 100., log_history_reward: bool = True, my_logger: logging.Logger = None) -> None:
+    def __init__(
+            self, 
+            b: float = 1., 
+            angle_scale: float = 180., 
+            velocity_scale: float = 100.,
+            angle_weight: float = 0.5, 
+            log_history_reward: bool = True, 
+            my_logger: logging.Logger = None
+        ) -> None:
+        assert 0. <= angle_weight <= 1., "angle_weight不在[0,1]范围内"
+
         self.b = b
         self.angle_scale = angle_scale
         self.velocity_scale = velocity_scale
+        self.angle_weight = angle_weight
         super().__init__(is_potential=False, log_history_reward=log_history_reward, my_logger=my_logger)
     
     def get_reward(self, state: Union[namedtuple, np.ndarray], **kwargs) -> float:
@@ -59,7 +70,7 @@ class DenseRewardBasedOnAngleAndVelocity(RewardBase):
         cliped_velocity_error = np.clip(velocity_error / self.velocity_scale, a_min=0., a_max=1.)
         velocity_base_reward = - np.power(cliped_velocity_error, self.b)
 
-        return 0.5 * (angle_base_reward + velocity_base_reward)
+        return self.angle_weight *  angle_base_reward + (1. - self.angle_weight) * velocity_base_reward
 
     def reset(self):
         super().reset()

@@ -146,7 +146,10 @@ class AttitudeControlTask(Task):
                 if rwd == "dense":
                     self.reward_funcs.append(
                         DenseRewardBasedOnAngleAndVelocity(
-                            b=tmp_cfg["b"]
+                            b=tmp_cfg.get("b", 0.5),
+                            angle_scale=tmp_cfg.get("angle_scale", 180),
+                            velocity_scale=tmp_cfg.get("velocity_scale", 100),
+                            angle_weight=tmp_cfg.get("angle_weight", 0.5),
                         )
                     )
                 # TODO: other rewards
