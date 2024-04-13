@@ -8,7 +8,12 @@ import logging
 
 class RewardBase(ABC):
 
-    def __init__(self, is_potential: bool=False, log_history_reward: bool=False, my_logger: logging.Logger=None) -> None:
+    def __init__(
+        self, 
+        is_potential: bool=False, 
+        log_history_reward: bool=False, 
+        my_logger: logging.Logger=None
+    ) -> None:
         self.is_potential = is_potential  # 奖励是否基于势
         self.pre_reward = 0.  # 上一回合的奖励值，如果奖励基于势能，该值记录势
         self.reward_trajectory = []

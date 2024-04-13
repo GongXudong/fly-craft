@@ -10,7 +10,7 @@ from tasks.goal_sampler import GoalSampler
 
 from rewards.reward_base import RewardBase
 from rewards.dense_reward_based_on_angle_and_velocity import DenseRewardBasedOnAngleAndVelocity
-from rewards.sparse_reward import SparseReward
+from flycraft.rewards.sparse_reward import SparseReward
 
 from terminations.termination_base import TerminationBase
 from terminations.reach_target_termination2 import ReachTargetTermination2
@@ -156,8 +156,7 @@ class AttitudeControlTask(Task):
                 elif rwd == "sparse":
                     self.reward_funcs.append(
                         SparseReward(
-                            reach_target_reward=tmp_cfg.get("reach_target_reward", 0.0),
-                            else_reward=tmp_cfg.get("else_reward", 0.0),
+                            reward_constant=tmp_cfg.get("reward_constant", 0.0),
                         )
                     )
                 # TODO: other rewards
