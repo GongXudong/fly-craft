@@ -12,12 +12,13 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 from rewards.reward_base import RewardBase
 
 
-class ReachTargetReward(RewardBase):
+class SparseReward(RewardBase):
 
     def __init__(self, 
         is_potential: bool = False, log_history_reward: bool=False,
         step_frequence: int=100, integral_time_length: float=1.,
-        v_threshold=10., mu_threshold=1., chi_threshold=1., 
+        v_threshold: float=10., mu_threshold: float=1., chi_threshold: float=1.,
+        reach_target_reward: float=0., else_reward: float=0. 
     ) -> None:
         super().__init__(is_potential=is_potential, log_history_reward=log_history_reward)
 
@@ -30,6 +31,9 @@ class ReachTargetReward(RewardBase):
         self.mu_threshold = mu_threshold
         self.chi_threshold = chi_threshold
 
+        self.reach_target_reward = reach_target_reward
+        self.else_reward = else_reward
+
     def get_reward(self, state: Union[namedtuple, np.ndarray], **kwargs) -> float:
         assert "goal_v" in kwargs, "参数中需要包括goal_v，再调用get_termination方法"
         assert "goal_mu" in kwargs, "参数中需要包括goal_mu，再调用get_termination方法"
@@ -40,7 +44,7 @@ class ReachTargetReward(RewardBase):
         state_list = kwargs["state_list"]  # list[namedtuple], GuideEnv.get_state_vars()返回的namedtuple
 
         if len(state_list) < self.integral_window_length:
-            return 0.
+            return self.else_reward
         else:
             v_flag, mu_flag, chi_flag = False, False, False
             if sum([abs(kwargs["goal_v"] - item.v) for item in state_list[-self.integral_window_length:]]) < self.v_integral_threshold:
@@ -50,9 +54,9 @@ class ReachTargetReward(RewardBase):
             if sum([abs(kwargs["goal_chi"] - item.chi) for item in state_list[-self.integral_window_length:]]) < self.chi_integral_threshold:
                 chi_flag = True
             if v_flag and mu_flag and chi_flag:
-                return 1.
+                return self.reach_target_reward
             else:
-                return 0.
+                return self.else_reward
     
     def reset(self):
         super().reset()

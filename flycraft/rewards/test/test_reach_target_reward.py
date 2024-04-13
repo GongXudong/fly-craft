@@ -7,7 +7,7 @@ PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
 if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
-from rewards.reach_target_reward import ReachTargetReward
+from flycraft.rewards.sparse_reward import SparseReward
 from tasks.attitude_control_task import AttitudeControlTask
 
 
@@ -15,9 +15,11 @@ class ReachTargetReardTest(unittest.TestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self.reach_target_reward = ReachTargetReward(
+        self.reach_target_reward = SparseReward(
             step_frequence=100, integral_time_length=1, 
-            v_threshold=10., mu_threshold=1., chi_threshold=1.)
+            v_threshold=10., mu_threshold=1., chi_threshold=1.,
+            reach_target_reward=1., else_reward=0.
+        )
         
         self.state_var_type = AttitudeControlTask.get_state_vars()
         
