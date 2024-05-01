@@ -66,13 +66,13 @@ class NegativeOverloadAndBigPhiTermination(TerminationBase):
         self.invalid_cnt = 0
 
     @property
-    def time_window_step_length(self):
+    def time_window_step_length(self) -> int:
         """判断使用的时间窗口step数
 
         Returns:
             _type_: _description_
         """
-        return self.time_window * self.step_frequence
+        return round(self.time_window * self.step_frequence)
 
     def __str__(self) -> str:
         return "negative_overload_and_big_phi_termination"

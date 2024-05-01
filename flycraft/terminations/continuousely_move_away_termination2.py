@@ -130,13 +130,13 @@ class ContinuouselyMoveAwayTermination2(TerminationBase):
         self.velocity_vector_continuously_increasing_num = -1
 
     @property
-    def time_window_step_length(self):
+    def time_window_step_length(self) -> int:
         """判断使用的时间窗口step数
 
         Returns:
             _type_: _description_
         """
-        return self.time_window * self.step_frequence
+        return round(self.time_window * self.step_frequence)
 
     def __str__(self) -> str:
         return "continuousely_move_away_termination_based_on_velocity_vector_error"

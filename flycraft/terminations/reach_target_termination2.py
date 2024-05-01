@@ -83,13 +83,13 @@ class ReachTargetTermination2(TerminationBase):
         pass
     
     @property
-    def integral_window_length(self):
+    def integral_window_length(self) -> int:
         """v, mu, chi的积分窗口长度
 
         Returns:
             _type_: _description_
         """
-        return self.integral_time_length * self.step_frequence
+        return round(self.integral_time_length * self.step_frequence)
 
     @property
     def v_integral_threshold(self):
