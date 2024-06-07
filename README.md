@@ -1,10 +1,18 @@
 # fly-craft
 
-An efficient goal-conditioned reinforcement learning environment for fixed-wing UAV attitude control.
+An efficient goal-conditioned reinforcement learning environment for fixed-wing UAV velocity vector control.
 
 [![PyPI version](https://img.shields.io/pypi/v/flycraft.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/flycraft/)
 [![Downloads](https://static.pepy.tech/badge/flycraft)](https://pepy.tech/project/flycraft)
 [![GitHub](https://img.shields.io/github/license/gongxudong/fly-craft.svg)](LICENSE.txt)
+
+## Demos
+
+### change velocity vector (v, \mu, \chi) from (200, 0, 0) to (140, -40, -165)
+![change velocity vector (v, \mu, \chi) from (200, 0, 0) to (140, -40, -165)](assets/traj_140_-40_-165.gif)
+
+### change velocity vector (v, \mu, \chi) from (200, 0, 0) to (120, 50, 170)
+![change velocity vector (v, \mu, \chi) from (200, 0, 0) to (120, 50, 170)](assets/traj_120_50_170.gif)
 
 ## Installation
 
@@ -41,17 +49,13 @@ for _ in range(500):
 env.close()
 ```
 
-## Documentation
-
-TODO:
-
 ## Citation
 
 Cite as
 
 ```bib
 @article{gong2024flycraft,
-  title        = {fly-craft: An Efficient Goal-Conditioned Environment for Fixed-Wing UAV Attitude Control},
+  title        = {FlyCraft: An Efficient Goal-Conditioned Reinforcement Learning Environment for Fixed-Wing UAV Velocity Vector Control},
   author       = {Xudong, Gong and Hao, Wang and Dawei, Feng and Weijia, Wang},
   year         = 2024,
   journal      = {},
