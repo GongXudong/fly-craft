@@ -11,10 +11,10 @@ An efficient goal-conditioned reinforcement learning environment for fixed-wing 
 The policies are trained by "Iterative Regularized Policy Optimization with Imperfect Demonstrations (ICML2024)". [Code](https://github.com/GongXudong/IRPO)
 
 ### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)
-![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)](assets/traj_140_-40_-165.gif)
+![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)](https://github.com/GongXudong/fly-craft/blob/main/assets/traj_140_-40_-165.gif)
 
 ### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)
-![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](assets/traj_120_50_170.gif)
+![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](https://github.com/GongXudong/fly-craft/blob/main/assets/traj_120_50_170.gif)
 
 
 ## Installation
