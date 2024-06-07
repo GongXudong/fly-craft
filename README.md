@@ -8,11 +8,14 @@ An efficient goal-conditioned reinforcement learning environment for fixed-wing 
 
 ## Demos
 
-### change velocity vector (v, \mu, \chi) from (200, 0, 0) to (140, -40, -165)
-![change velocity vector (v, \mu, \chi) from (200, 0, 0) to (140, -40, -165)](assets/traj_140_-40_-165.gif)
+The policies are trained by "Iterative Regularized Policy Optimization with Imperfect Demonstrations (ICML2024)". [Code](https://github.com/GongXudong/IRPO)
 
-### change velocity vector (v, \mu, \chi) from (200, 0, 0) to (120, 50, 170)
-![change velocity vector (v, \mu, \chi) from (200, 0, 0) to (120, 50, 170)](assets/traj_120_50_170.gif)
+### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)
+![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)](assets/traj_140_-40_-165.gif)
+
+### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)
+![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](assets/traj_120_50_170.gif)
+
 
 ## Installation
 
