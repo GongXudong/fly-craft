@@ -1,6 +1,6 @@
 # fly-craft
 
-An efficient goal-conditioned reinforcement learning environment for fixed-wing UAV velocity vector control.
+An efficient goal-conditioned reinforcement learning environment for fixed-wing UAV velocity vector control based on **Gymnasium**.
 
 [![PyPI version](https://img.shields.io/pypi/v/flycraft.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/flycraft/)
 [![Downloads](https://static.pepy.tech/badge/flycraft)](https://pepy.tech/project/flycraft)
@@ -59,7 +59,7 @@ Cite as
 ```bib
 @article{gong2024flycraft,
   title        = {FlyCraft: An Efficient Goal-Conditioned Reinforcement Learning Environment for Fixed-Wing UAV Velocity Vector Control},
-  author       = {Xudong, Gong and Hao, Wang and Dawei, Feng and Weijia, Wang},
+  author       = {Gong, Xudong and Wang, Hao and Feng, Dawei and Wang, Weijia},
   year         = 2024,
   journal      = {},
 }
