@@ -1,9 +1,8 @@
 {
-    "description": "Markov reward used for HER, must satisfy: task.step_frequence * terminations.RT.integral_time_length == 1",
     "flag_str": "Train",
     "debug_mode": true,
     "task": {
-        "control_mode": "guidance_law_mode",
+        "control_mode": "end_to_end_mode",
         "h0": 5000,
         "v0": 200,
         "step_frequence": 10,
@@ -34,8 +33,15 @@
         }
     },
     "terminations": {
-        "RT_SINGLE_STEP": {
+        "RT": {
             "use": true,
+            "integral_time_length": 1,
+            "v_threshold": 10,
+            "angle_threshold": 3,
+            "termination_reward": 0.0
+        },
+        "RT_SINGLE_STEP": {
+            "use": false,
             "v_threshold": 10,
             "angle_threshold": 3,
             "termination_reward": 0.0
@@ -55,6 +61,14 @@
         },
         "T": {
             "use": true,
+            "termination_reward": -1
+        },
+        "CMA": {
+            "use": true,
+            "time_window": 2,
+            "ignore_mu_error": 1,
+            "ignore_chi_error": 1,
+            "is_termination_reward_based_on_steps_left": true,
             "termination_reward": -1
         },
         "CR": {

@@ -2,6 +2,7 @@
     "flag_str": "Train",
     "debug_mode": true,
     "task": {
+        "control_mode": "guidance_law_mode",
         "h0": 5000,
         "v0": 200,
         "step_frequence": 10,

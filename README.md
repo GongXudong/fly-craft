@@ -52,6 +52,16 @@ for _ in range(500):
 env.close()
 ```
 
+## Applications
+
+### Examples
+
+1. Examples based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples
+
+### Researches on FlyCraft
+
+1. Xudong, Gong, et al. "Iterative Regularized Policy Optimization with Imperfect Demonstrations." Forty-first International Conference on Machine Learning. 2024.
+
 ## Citation
 
 Cite as

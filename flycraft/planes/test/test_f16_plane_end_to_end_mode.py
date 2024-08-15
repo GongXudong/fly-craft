@@ -16,7 +16,7 @@ class GoalSamplerTest(unittest.TestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self.env_config = load_config(PROJECT_ROOT_DIR / "configs" / "NMR.json")
+        self.env_config = load_config(PROJECT_ROOT_DIR / "configs" / "NMR_end2end.json")
         self.plane = F16Plane(self.env_config)
         self.plane.reset()
         
@@ -28,7 +28,7 @@ class GoalSamplerTest(unittest.TestCase):
     def test_2(self):
         """step with fixed action
         """
-        action = [1, 0.3, 1]
+        action = [5., 10., 21., 0.3]
 
         for i in range(100):
             state = self.plane.step(action)

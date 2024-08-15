@@ -45,19 +45,19 @@ class FlyCraftEnv(gym.Env):
             )
         )
 
-        action_mins = F16Plane.get_action_lower_bounds()
-        action_maxs = F16Plane.get_action_higher_bounds()
-        self.action_space = spaces.Box(low=np.array(action_mins, dtype=np.float32), high=np.array(action_maxs, dtype=np.float32))  # p, nz, pla
-
         self.env_config: dict = load_config(config_file)
         update_nested_dict(self.env_config, custom_config)
-        
+
         self.plane: F16Plane = F16Plane(env_config=self.env_config)
         self.task: AttitudeControlTask = AttitudeControlTask(
             plane=self.plane,
             np_random=self.np_random,
             env_config=self.env_config
         )
+        
+        action_mins = F16Plane.get_action_lower_bounds(self.plane.control_mode)
+        action_maxs = F16Plane.get_action_higher_bounds(self.plane.control_mode)
+        self.action_space = spaces.Box(low=np.array(action_mins, dtype=np.float32), high=np.array(action_maxs, dtype=np.float32))  # (p, nz, pla) if control_mode == "guidance_law_mode" else (ail, ele, rud, pla)
         
         # log data
         self.step_cnt = 0
@@ -114,7 +114,7 @@ class FlyCraftEnv(gym.Env):
         """_summary_
 
         Args:
-            action (_type_): action是制导律输出的[p, nz, pla]
+            action (_type_): guidance_law_mode模式下action是制导律输出的[p, nz, pla]，end_to_end_mode模式下action是[ail, ele, rud, pla]
 
         Returns:
             tuple[ObsType, SupportsFloat, bool, bool, dict[str, Any]]: next_obs, reward, terminated, truncated, info
@@ -143,7 +143,11 @@ class FlyCraftEnv(gym.Env):
                 if self.debug_mode:
                     print(item_obs, item_act)
                 tmp.append([*item_obs, *item_act])
-            tmp_pd = pd.DataFrame(data=tmp, columns=['s_phi', 's_theta', 's_psi', 's_v', 's_mu', 's_chi', 's_p', 's_h', 'target_v', 'target_mu', 'target_chi','a_p', 'a_nz', 'a_pla'])
+            
+            if self.plane.control_mode_guidance_law:
+                tmp_pd = pd.DataFrame(data=tmp, columns=['s_phi', 's_theta', 's_psi', 's_v', 's_mu', 's_chi', 's_p', 's_h', 'target_v', 'target_mu', 'target_chi','a_p', 'a_nz', 'a_pla'])
+            else:
+                tmp_pd = pd.DataFrame(data=tmp, columns=['s_phi', 's_theta', 's_psi', 's_v', 's_mu', 's_chi', 's_p', 's_h', 'target_v', 'target_mu', 'target_chi','a_ail', 'a_ele', 'a_rud', 'a_pla'])
             tmp_pd.to_csv(str((PROJECT_ROOT_DIR / "my_logs" / 'nan_states.csv').absolute()), index=False)
 
         terminated, truncated, reward, info = False, False, 0., {}
@@ -202,12 +206,20 @@ class FlyCraftEnv(gym.Env):
             info["rewards"][str(r_func)] = tmp_reward
             reward += tmp_reward / len(self.task.reward_funcs)
         
-        info["action"] = {
-            "p": action[0],
-            "nz": action[1],
-            "pla": action[2],
-            "rud": 0.
-        }
+        if self.plane.control_mode_guidance_law:
+            info["action"] = {
+                "p": action[0],
+                "nz": action[1],
+                "pla": action[2],
+                "rud": 0.
+            }
+        else:
+            info["action"] = {
+                "ail": action[0],
+                "ele": action[1],
+                "rud": action[2],
+                "pla": action[3]
+            }
         info["desired_goal"] = [*desired_goal]
         info["plane_state"] = deepcopy(self.plane_state_dict_list[-2])
         info["plane_next_state"] = deepcopy(self.plane_state_dict_list[-1])
