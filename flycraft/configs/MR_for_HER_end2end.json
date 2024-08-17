@@ -37,7 +37,7 @@
         "sparse": {
             "use": false,
             "reward_constant": -1.0
-        },
+        }
     },
     "terminations": {
         "RT_SINGLE_STEP": {
