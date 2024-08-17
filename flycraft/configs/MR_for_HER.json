@@ -30,7 +30,13 @@
         "dense": {
             "use": true,
             "b": 0.5,
-            "angle_weight": 0.5
+            "angle_weight": 0.5,
+            "angle_scale": 180,
+            "velocity_scale": 100
+        },
+        "sparse": {
+            "use": false,
+            "reward_constant": -1.0
         }
     },
     "terminations": {
