@@ -91,9 +91,9 @@ The configurations about rewards, including:
 * **dense** Dict: The configurations of the dense reward
   * _use_ Boolean: whether use this reward;
   * _b_ Float: indicates the exponent used for each reward component;
-  * _angle_weight_ Float: the coefficient of the angle error component of reward;
-  * _angle_scale_ Float: the scalar used to scale the error in direction of velocity vector;
-  * _velocity_scale_ Float: the scalar used to scale the error in true air speed of velocity vector.
+  * _angle_weight_ Float [0.0, 1.0]: the coefficient of the angle error component of reward;
+  * _angle_scale_ Float (deg): the scalar used to scale the error in direction of velocity vector;
+  * _velocity_scale_ Float (m/s): the scalar used to scale the error in true air speed of velocity vector.
 * **sparse** Dict: The configurations of the sparse reward
   * _use_ Boolean: whether use this reward;
   * _reward_constant_ Float: the reward when achieving the desired goal.
@@ -104,24 +104,24 @@ The configurations about termination conditions, including:
 
 * **RT** Dict: The configurations of the Reach Target Termination (used by non-Markovian reward)
   * _use_ Boolean: whether use this termination;
-  * _integral_time_length_ Integer: the number of consecutive seconds required to achieve the accuracy of determining achievement;
-  * _v_threshold_ Float: the error band used to determine whether true air speed meets the requirements;
-  * _angle_threshold_ Float: the error band used to determine whether the direction of velocity vector meets the requirements;
+  * _integral_time_length_ Integer (s): the number of consecutive seconds required to achieve the accuracy of determining achievement;
+  * _v_threshold_ Float (m/s): the error band used to determine whether true air speed meets the requirements;
+  * _angle_threshold_ Float (deg): the error band used to determine whether the direction of velocity vector meets the requirements;
   * _termination_reward_ Float: the reward the agent receives when triggering RT.
 * **RT_SINGLE_STEP** Dict: The configurations of the Reach Target Termination (used by Markovian reward)
   * _use_ Boolean: whether use this termination;
-  * _v_threshold_ Float: the error band used to determine whether true air speed meets the requirements;
-  * _angle_threshold_ Float: the error band used to determine whether the direction of velocity vector meets the requirements;
+  * _v_threshold_ Float (m/s): the error band used to determine whether true air speed meets the requirements;
+  * _angle_threshold_ Float (deg): the error band used to determine whether the direction of velocity vector meets the requirements;
   * _termination_reward_ Float: the reward the agent receives when triggering RT_SINGLE_STEP.
 * **C** Dict: The configurations of Crash Termination
   * _use_ Boolean: whether use this termination;
-  * _h0_ Float: the altitude threshold below which this termination triggers;
+  * _h0_ Float (m): the altitude threshold below which this termination triggers;
   * _is_termination_reward_based_on_steps_left_ Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * _termination_reward_ Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
 * **ES** Dict: The configurations of Extreme State Termination
   * _use_ Boolean: whether use this termination;
-  * _v_max_ Float: the maximum value of true air speed. when the true air speed exceeding this value, this termination triggers;
-  * _p_max_ Float: the maximum value of roll angular speed. when the roll angular speed exceeding this value, this termination triggers;
+  * _v_max_ Float (m/s): the maximum value of true air speed. when the true air speed exceeding this value, this termination triggers;
+  * _p_max_ Float (deg/s): the maximum value of roll angular speed. when the roll angular speed exceeding this value, this termination triggers;
   * _is_termination_reward_based_on_steps_left_ Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * _termination_reward_ Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
 * **T** Dict: The configurations of Timeout Termination
@@ -129,21 +129,21 @@ The configurations about termination conditions, including:
   * _termination_reward_ Float: the reward when triggers this termination.
 * **CMA** Dict: The configurations of Continuously Move Away Termination
   * _use_ Boolean: whether use this termination;
-  * _time_window_ Integer: the time window used to detect whether this termination condition will be triggered;
-  * _ignore_mu_error_ Float: when the error of flight path elevator angle is less than this value, the termination condition will no longer be considered;
-  * _ignore_chi_error_ Float: when the error of flight path azimuth angle is less than this value, the termination condition will no longer be considered;
+  * _time_window_ Integer (s): the time window used to detect whether this termination condition will be triggered;
+  * _ignore_mu_error_ Float (deg): when the error of flight path elevator angle is less than this value, the termination condition will no longer be considered;
+  * _ignore_chi_error_ Float (deg): when the error of flight path azimuth angle is less than this value, the termination condition will no longer be considered;
   * _is_termination_reward_based_on_steps_left_ Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * _termination_reward_ Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
 * **CR** Dict: The configurations of Continuously Roll Termination
   * _use_ Boolean: whether use this termination;
-  * _continuousely_roll_threshold_ Float: when the angle of continuous roll exceeds this value, this termination condition is triggered;
+  * _continuousely_roll_threshold_ Float (deg): when the angle of continuous roll exceeds this value, this termination condition is triggered;
   * _is_termination_reward_based_on_steps_left_ Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * _termination_reward_ Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
 * **NOBR** Dict: The configurations of Negative Overload and Big Roll Termination
   * _use_ Boolean: whether use this termination;
-  * _time_window_ Integer: the time window used to detect whether this termination condition will be triggered;
+  * _time_window_ Integer (s): the time window used to detect whether this termination condition will be triggered;
   * _negative_overload_threshold_ Float: when the overloat exceeds this value for at least 'time_window' seconds, this termination condition is triggered;
-  * _big_phi_threshold_ Float: when the roll angle exceeds this value for at least 'time_window' seconds, this termination condition is triggered;
+  * _big_phi_threshold_ Float (deg): when the roll angle exceeds this value for at least 'time_window' seconds, this termination condition is triggered;
   * _is_termination_reward_based_on_steps_left_ Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * _termination_reward_ Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
 
