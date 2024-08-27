@@ -10,7 +10,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from rewards.dense_reward import DenseReward
-from tasks.attitude_control_task import AttitudeControlTask
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.geometry_utils import angle_of_2_3d_vectors, v_mu_chi_2_enh
 
 
@@ -20,7 +20,7 @@ class DenseReardTest(unittest.TestCase):
         super().setUp()
         self.dense_reward = DenseReward(b=1.)
         
-        self.state_var_type = AttitudeControlTask.get_state_vars()
+        self.state_var_type = VelocityVectorControlTask.get_state_vars()
         
     def test_1(self):
         """积分长度达到要求，精度也达到要求，返回1.

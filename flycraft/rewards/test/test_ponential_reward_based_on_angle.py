@@ -8,7 +8,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from rewards.ponential_reward_based_on_angle import PonentialRewardBasedOnAngle
-from tasks.attitude_control_task import AttitudeControlTask
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.load_config import load_config
 from utils.geometry_utils import angle_of_2_3d_vectors
 
@@ -17,9 +17,9 @@ class PonentialRewardBasedOnAngleTest(unittest.TestCase):
     def setUp(self) -> None:
         super().setUp()
 
-        state_min = AttitudeControlTask.get_state_lower_bounds()
-        state_max = AttitudeControlTask.get_state_higher_bounds()
-        self.state_var_type = AttitudeControlTask.get_state_vars()
+        state_min = VelocityVectorControlTask.get_state_lower_bounds()
+        state_max = VelocityVectorControlTask.get_state_higher_bounds()
+        self.state_var_type = VelocityVectorControlTask.get_state_vars()
         self.ponential_reward = PonentialRewardBasedOnAngle(
             b=1.,
             # gamma=0.9999,

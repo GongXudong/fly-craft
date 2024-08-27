@@ -10,7 +10,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from rewards.dense_reward_based_on_angle_and_velocity import DenseRewardBasedOnAngleAndVelocity
-from tasks.attitude_control_task import AttitudeControlTask
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.geometry_utils import angle_of_2_3d_vectors, v_mu_chi_2_enh
 
 
@@ -19,12 +19,12 @@ class DenseRewardBasedOnAngleAndVelocityTest(unittest.TestCase):
     def setUp(self) -> None:
         super().setUp()
         self.dense_reward = DenseRewardBasedOnAngleAndVelocity(
-            b=0.5, 
+            b=1.0, 
             angle_scale=180., 
             velocity_scale=100.
         )
         
-        self.state_var_type = AttitudeControlTask.get_state_vars()
+        self.state_var_type = VelocityVectorControlTask.get_state_vars()
         
     def test_1(self):
         """速度方向和大小均达到目标.

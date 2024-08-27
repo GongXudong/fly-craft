@@ -18,7 +18,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from planes.f16_plane import F16Plane
-from tasks.attitude_control_task import AttitudeControlTask
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.load_config import load_config
 from utils.dict_utils import update_nested_dict
 from terminations.reach_target_termination import ReachTargetTermination
@@ -33,10 +33,10 @@ class FlyCraftEnv(gym.Env):
         custom_config: dict={}
     ) -> None:
         # define spaces
-        state_mins = AttitudeControlTask.get_state_lower_bounds()
-        state_maxs = AttitudeControlTask.get_state_higher_bounds()
-        goal_mins = AttitudeControlTask.get_goal_lower_bounds()
-        goal_maxs = AttitudeControlTask.get_goal_higher_bounds()
+        state_mins = VelocityVectorControlTask.get_state_lower_bounds()
+        state_maxs = VelocityVectorControlTask.get_state_higher_bounds()
+        goal_mins = VelocityVectorControlTask.get_goal_lower_bounds()
+        goal_maxs = VelocityVectorControlTask.get_goal_higher_bounds()
         self.observation_space = spaces.Dict(
             dict(
                 observation = spaces.Box(low=np.array(state_mins, dtype=np.float32), high=np.array(state_maxs, dtype=np.float32)),  # phi, theta, psi, v, mu, chi, p, h
@@ -49,7 +49,7 @@ class FlyCraftEnv(gym.Env):
         update_nested_dict(self.env_config, custom_config)
 
         self.plane: F16Plane = F16Plane(env_config=self.env_config)
-        self.task: AttitudeControlTask = AttitudeControlTask(
+        self.task: VelocityVectorControlTask = VelocityVectorControlTask(
             plane=self.plane,
             np_random=self.np_random,
             env_config=self.env_config
@@ -74,7 +74,7 @@ class FlyCraftEnv(gym.Env):
     
     def _get_obs(self) -> Dict[str, np.ndarray]:
         return {
-            "observation": np.array(AttitudeControlTask.convert_dict_to_state_vars(self.plane_state_dict_list[-1]), dtype=np.float32),
+            "observation": np.array(VelocityVectorControlTask.convert_dict_to_state_vars(self.plane_state_dict_list[-1]), dtype=np.float32),
             "achieved_goal": self.task.get_achieved_goal().astype(np.float32),
             "desired_goal": self.task.get_goal().astype(np.float32),
         }
@@ -99,7 +99,7 @@ class FlyCraftEnv(gym.Env):
 
         self.step_cnt = 0
         self.plane_state_dict_list = [plane_state_dict]
-        self.plane_state_namedtuple_list = [AttitudeControlTask.convert_dict_to_state_vars(plane_state_dict)]
+        self.plane_state_namedtuple_list = [VelocityVectorControlTask.convert_dict_to_state_vars(plane_state_dict)]
         self.action_list = []
 
         info = {}
@@ -133,7 +133,7 @@ class FlyCraftEnv(gym.Env):
 
         plane_state_dict = self.plane.step(action)
         self.plane_state_dict_list.append(deepcopy(plane_state_dict))
-        plane_state_namedtuple = AttitudeControlTask.convert_dict_to_state_vars(plane_state_dict)
+        plane_state_namedtuple = VelocityVectorControlTask.convert_dict_to_state_vars(plane_state_dict)
         self.plane_state_namedtuple_list.append(plane_state_namedtuple)
         
         # check obs for NaN!!!!!!!!!
@@ -180,10 +180,10 @@ class FlyCraftEnv(gym.Env):
 
                 if self.debug_mode:
                     if isinstance(t_func, ReachTargetTermination) or isinstance(t_func, ReachTargetTermination2) or isinstance(t_func, ReachTargetTerminationSingleStep):
-                        # reach target, 绿色打印
+                        # reach target, print with green
                         print(f"print, {self.flag_str}, \033[32m{str(t_func)}。\033[0m steps: {self.step_cnt}。target: ({desired_goal[0]:.2f}, {desired_goal[1]:.2f}, {desired_goal[2]:.2f})。achieved target: ({plane_state_dict['v']:.2f}, {plane_state_dict['mu']:.2f}, {plane_state_dict['chi']:.2f})。expert steps: {self.task.goal_sampler.goal_expert_length}。")
                     else:
-                        # 其它终止条件，红色打印
+                        # the other terminations, print with red
                         print(f"print, {self.flag_str}, \033[31m{str(t_func)}。\033[0m steps: {self.step_cnt}。target: ({desired_goal[0]:.2f}, {desired_goal[1]:.2f}, {desired_goal[2]:.2f})。achieved target: ({plane_state_dict['v']:.2f}, {plane_state_dict['mu']:.2f}, {plane_state_dict['chi']:.2f})。expert steps: {self.task.goal_sampler.goal_expert_length}。")
 
                 if "rewards" not in info:

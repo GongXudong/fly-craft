@@ -8,7 +8,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from terminations.continuousely_move_away_termination2 import ContinuouselyMoveAwayTermination2
-from tasks.attitude_control_task import AttitudeControlTask
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.load_config import load_config
 
 
@@ -25,7 +25,7 @@ class ContinuouselyMoveAwayTermination2Test(unittest.TestCase):
             env_config=env_config
         )
 
-        self.state_var_type = AttitudeControlTask.get_state_vars()
+        self.state_var_type = VelocityVectorControlTask.get_state_vars()
 
     def test_1(self):
         """速度矢量误差持续增大

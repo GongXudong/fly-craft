@@ -22,7 +22,7 @@ from terminations.continuousely_move_away_termination import ContinuouselyMoveAw
 from terminations.continuousely_roll_termination import ContinuouselyRollTermination
 from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
 
-class AttitudeControlTask(Task):
+class VelocityVectorControlTask(Task):
 
     def __init__(
         self, 
@@ -322,7 +322,7 @@ class AttitudeControlTask(Task):
 
         terminated_arr = []
         for tmp_a, tmp_d in zip(tmp_achieved_goal, tmp_desired_goal):
-            state_var = AttitudeControlTask.get_state_vars()
+            state_var = VelocityVectorControlTask.get_state_vars()
             cur_state_namedtuple = state_var(phi=0, theta=0, psi=0, v=tmp_a[0], mu=tmp_a[1], chi=tmp_a[2], p=0, h=0)
 
             ternimated, truncated = reach_target_termination_func.get_termination(
@@ -359,7 +359,7 @@ class AttitudeControlTask(Task):
         
         # compute reward: base on self.reward_funcs
         reward_arr = []
-        state_var = AttitudeControlTask.get_state_vars()
+        state_var = VelocityVectorControlTask.get_state_vars()
 
         for tmp_a, tmp_d, tmp_info in zip(tmp_achieved_goals, tmp_desired_goals, tmp_infos):
             # 使用self.reward_funcs中的所有奖励函数计算reward
@@ -405,7 +405,7 @@ class AttitudeControlTask(Task):
             namedtuple: _description_
         """
 
-        state_vars_type = AttitudeControlTask.get_state_vars()
+        state_vars_type = VelocityVectorControlTask.get_state_vars()
         return state_vars_type(
             phi=state_dict['phi'], theta=state_dict['theta'], psi=state_dict['psi'], 
             v=state_dict['v'], mu=state_dict['mu'], chi=state_dict['chi'],
@@ -419,7 +419,7 @@ class AttitudeControlTask(Task):
         Returns:
             _type_: _description_
         """
-        state_vars_type = AttitudeControlTask.get_state_vars()
+        state_vars_type = VelocityVectorControlTask.get_state_vars()
         return state_vars_type(phi=-180., theta=-90., psi=-180., v=0., mu=-90., chi=-180., p=-300., h=0.)
 
     @staticmethod
@@ -429,16 +429,16 @@ class AttitudeControlTask(Task):
         Returns:
             _type_: _description_
         """
-        state_vars_type = AttitudeControlTask.get_state_vars()
+        state_vars_type = VelocityVectorControlTask.get_state_vars()
         return state_vars_type(phi=180., theta=90., psi=180., v=1000., mu=90., chi=180., p=300., h=20000.)
 
     @staticmethod
     def get_goal_lower_bounds():
-        goal_vars_type = AttitudeControlTask.get_goal_vars()
+        goal_vars_type = VelocityVectorControlTask.get_goal_vars()
         return goal_vars_type(v=0., mu=-90., chi=-180.)
     
     @staticmethod
     def get_goal_higher_bounds():
-        goal_vars_type = AttitudeControlTask.get_goal_vars()
+        goal_vars_type = VelocityVectorControlTask.get_goal_vars()
         return goal_vars_type(v=1000., mu=90., chi=180.)
     

@@ -8,7 +8,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
-from tasks.attitude_control_task import AttitudeControlTask
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.load_config import load_config
 
 
@@ -27,7 +27,7 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
             env_config=env_config
         )
 
-        self.state_var_type = AttitudeControlTask.get_state_vars()
+        self.state_var_type = VelocityVectorControlTask.get_state_vars()
     
     def test_1(self):
         """测试长度超过200, phi>60, nz<0 的情况
