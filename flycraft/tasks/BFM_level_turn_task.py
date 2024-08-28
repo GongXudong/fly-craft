@@ -6,23 +6,23 @@ from gymnasium.utils import seeding
 
 from planes.f16_plane import F16Plane
 from tasks.task_base import Task
-from flycraft.tasks.goal_samplers.goal_sampler_for_velocity_vector_control import GoalSampler
+from flycraft.tasks.goal_samplers.goal_sampler_for_BFM_level_turn import GoalSampler
 
 from rewards.reward_base import RewardBase
-from rewards.dense_reward_based_on_angle_and_velocity import DenseRewardBasedOnAngleAndVelocity
+from rewards.for_BFM_level_turn.dense_reward_based_on_velocity_chi import DenseRewardBasedOnAngleAndVelocity
 from rewards.sparse_reward import SparseReward
 
 from terminations.termination_base import TerminationBase
-from terminations.reach_target_termination2 import ReachTargetTermination2
-from terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
+from terminations.for_BFM_level_turn.reach_target_termination import ReachTargetTermination
+from terminations.for_BFM_level_turn.reach_target_termination_single_step import ReachTargetTerminationSingleStep
 from terminations.crash_termination import CrashTermination
 from terminations.extreme_state_termination import ExtremeStateTermination
 from terminations.timeout_termination import TimeoutTermination
-from terminations.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
+from terminations.for_BFM_level_turn.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
 from terminations.continuousely_roll_termination import ContinuouselyRollTermination
 from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
 
-class VelocityVectorControlTask(Task):
+class BFMLevelTurnTask(Task):
 
     def __init__(
         self, 
@@ -45,13 +45,10 @@ class VelocityVectorControlTask(Task):
             "goal": {
                 "use_fixed_goal": False,
                 "goal_v": 0, 
-                "goal_mu": 0, 
                 "goal_chi": 0,
                 "sample_random": True,
                 "v_min": 100., 
                 "v_max": 300.,
-                "mu_min": -90.,
-                "mu_max": 90.,
                 "chi_min": -180.,
                 "chi_max": 180.,
                 "available_goals_file": "res.csv",
@@ -68,14 +65,16 @@ class VelocityVectorControlTask(Task):
                 "RT": {
                     "use": False, 
                     "integral_time_length": 1,  # 在连续多长的时间窗口内满足条件
+                    "mu_tolerance": 1.,
                     "v_threshold": 10,  # 触发RT的最大v误差
-                    "angle_threshold": 3,  # 触发RT的最大角度误差
+                    "chi_threshold": 3,  # 触发RT的最大角度误差
                     "termination_reward": 0.0,  # 触发RT的奖励
                 },
                 "RT_SINGLE_STEP": {
                     "use": True,
+                    "mu_tolerance": 1.,
                     "v_threshold": 10,
-                    "angle_threshold": 3,
+                    "chi_threshold": 3,
                     "termination_reward": 0.0
                 },
                 "C": {
@@ -148,9 +147,10 @@ class VelocityVectorControlTask(Task):
                     self.reward_funcs.append(
                         DenseRewardBasedOnAngleAndVelocity(
                             b=tmp_cfg.get("b", 0.5),
-                            angle_scale=tmp_cfg.get("angle_scale", 180),
+                            mu_tolerance=tmp_cfg.get("mu_tolerance", 180),
+                            chi_scale=tmp_cfg.get("chi_scale", 180),
                             velocity_scale=tmp_cfg.get("velocity_scale", 100),
-                            angle_weight=tmp_cfg.get("angle_weight", 0.5),
+                            chi_weight=tmp_cfg.get("chi_weight", 0.5),
                         )
                     )
                 elif rwd == "sparse":
@@ -170,10 +170,11 @@ class VelocityVectorControlTask(Task):
             if tmp_cfg["use"]:
                 if tmnt == "RT":
                     self.termination_funcs.append(
-                        ReachTargetTermination2(
+                        ReachTargetTermination(
                             integral_time_length=tmp_cfg["integral_time_length"],
+                            mu_tolerance=tmp_cfg["mu_tolerance"],
                             v_threshold=tmp_cfg["v_threshold"],
-                            angle_threshold=tmp_cfg["angle_threshold"],
+                            chi_threshold=tmp_cfg["chi_threshold"],
                             termination_reward=tmp_cfg["termination_reward"],
                             env_config=self.config,
                             # my_logger=self.logger
@@ -182,8 +183,9 @@ class VelocityVectorControlTask(Task):
                 elif tmnt == "RT_SINGLE_STEP":
                     self.termination_funcs.append(
                         ReachTargetTerminationSingleStep(
+                            mu_tolerance=tmp_cfg["mu_tolerance"],
                             v_threshold=tmp_cfg["v_threshold"],
-                            angle_threshold=tmp_cfg["angle_threshold"],
+                            chi_threshold=tmp_cfg["chi_threshold"],
                             termination_reward=tmp_cfg["termination_reward"],
                             env_config=self.config,
                         )
@@ -269,13 +271,12 @@ class VelocityVectorControlTask(Task):
         current_state_dict = self.plane.current_obs
         return np.array([
             current_state_dict['v'],
-            current_state_dict['mu'],
             current_state_dict['chi'],
         ])
 
     def reset(self) -> None:
         goal_dict = self.goal_sampler.sample_goal()
-        self.goal = np.array([goal_dict["v"], goal_dict["mu"], goal_dict["chi"]])
+        self.goal = np.array([goal_dict["v"], goal_dict["chi"]])
         
         for t_func in self.termination_funcs:
             t_func.reset()
@@ -308,7 +309,7 @@ class VelocityVectorControlTask(Task):
                 break
         
         if reach_target_termination_func == None:
-            raise ValueError("VelocityVectorControlTask: when using off-policy algorithms, must use the termination condition: ReachTargetTerminationSingleStep!!!")
+            raise ValueError("BFMLevelTurnTask: when using off-policy algorithms, must use the termination condition: ReachTargetTerminationSingleStep!!!")
 
         # make tmp_achieved_goal and tmp_desired_goal be of shape (batch, goal_dim)
         if len(achieved_goal.shape) == 1:
@@ -318,18 +319,17 @@ class VelocityVectorControlTask(Task):
             tmp_achieved_goal = achieved_goal
             tmp_desired_goal = desired_goal
         else:
-            raise ValueError("VelocityVectorControlTask: the shape of achieved goal mush be 1-D or 2-D!")
+            raise ValueError("BFMLevelTurnTask: the shape of achieved goal mush be 1-D or 2-D!")
 
         terminated_arr = []
         for tmp_a, tmp_d in zip(tmp_achieved_goal, tmp_desired_goal):
-            state_var = VelocityVectorControlTask.get_state_vars()
-            cur_state_namedtuple = state_var(phi=0, theta=0, psi=0, v=tmp_a[0], mu=tmp_a[1], chi=tmp_a[2], p=0, h=0)
+            state_var = BFMLevelTurnTask.get_state_vars()
+            cur_state_namedtuple = state_var(phi=0, theta=0, psi=0, v=tmp_a[0], mu=0, chi=tmp_a[1], p=0, h=0)  # TODO: 从info中读取mu的值
 
             ternimated, truncated = reach_target_termination_func.get_termination(
                 state=cur_state_namedtuple,
                 goal_v=tmp_d[0],
-                goal_mu=tmp_d[1],
-                goal_chi=tmp_d[2]
+                goal_chi=tmp_d[1]
             )
 
             terminated_arr.append(ternimated)
@@ -355,11 +355,11 @@ class VelocityVectorControlTask(Task):
             tmp_desired_goals = desired_goal
             tmp_infos = info
         else:
-            raise ValueError("VelocityVectorControlTask: the shape of achieved goal mush be 1-D or 2-D!")
+            raise ValueError("BFMLevelTurnTask: the shape of achieved goal mush be 1-D or 2-D!")
         
         # compute reward: base on self.reward_funcs
         reward_arr = []
-        state_var = VelocityVectorControlTask.get_state_vars()
+        state_var = BFMLevelTurnTask.get_state_vars()
 
         for tmp_a, tmp_d, tmp_info in zip(tmp_achieved_goals, tmp_desired_goals, tmp_infos):
             # 使用self.reward_funcs中的所有奖励函数计算reward
@@ -368,9 +368,8 @@ class VelocityVectorControlTask(Task):
                 tmp_reward = r_func.get_reward(
                     state=state_var(0., 0., 0., 0., 0., 0., 0., 0.),
                     goal_v=tmp_d[0],
-                    goal_mu=tmp_d[1],
                     goal_chi=tmp_d[2],
-                    next_state=state_var(0., 0., 0., tmp_a[0], tmp_a[1], tmp_a[2], 0., 0.)
+                    next_state=state_var(0., 0., 0., tmp_a[0], 0., tmp_a[1], 0., 0.)  # TODO: 从info中读取mu的值
                 )
                 reward += tmp_reward / len(self.reward_funcs)
             reward_arr.append(reward)
@@ -392,11 +391,11 @@ class VelocityVectorControlTask(Task):
     @staticmethod
     def get_goal_vars():
 
-        return namedtuple("goal_vars", ["v", "mu", "chi"])
+        return namedtuple("goal_vars", ["v", "chi"])
     
     @staticmethod
     def convert_dict_to_state_vars(state_dict:dict) -> namedtuple:
-        """将仿真器返回的字典类型观测转换为环境定义的观测(VelocityVectorControlTask.get_state_vars()定义的namedtuple)
+        """将仿真器返回的字典类型观测转换为环境定义的观测(BFMLevelTurnTask.get_state_vars()定义的namedtuple)
 
         Args:
             state_dict (dict): 键包括：lef, npos, epos, h, alpha, beta, phi, theta, psi, p, q, r, v, vn, ve, vh, nx, ny, nz, ele, ail, rud, thrust, lon, lat, mu, chi
@@ -405,7 +404,7 @@ class VelocityVectorControlTask(Task):
             namedtuple: _description_
         """
 
-        state_vars_type = VelocityVectorControlTask.get_state_vars()
+        state_vars_type = BFMLevelTurnTask.get_state_vars()
         return state_vars_type(
             phi=state_dict['phi'], theta=state_dict['theta'], psi=state_dict['psi'], 
             v=state_dict['v'], mu=state_dict['mu'], chi=state_dict['chi'],
@@ -419,7 +418,7 @@ class VelocityVectorControlTask(Task):
         Returns:
             _type_: _description_
         """
-        state_vars_type = VelocityVectorControlTask.get_state_vars()
+        state_vars_type = BFMLevelTurnTask.get_state_vars()
         return state_vars_type(phi=-180., theta=-90., psi=-180., v=0., mu=-90., chi=-180., p=-300., h=0.)
 
     @staticmethod
@@ -429,16 +428,16 @@ class VelocityVectorControlTask(Task):
         Returns:
             _type_: _description_
         """
-        state_vars_type = VelocityVectorControlTask.get_state_vars()
+        state_vars_type = BFMLevelTurnTask.get_state_vars()
         return state_vars_type(phi=180., theta=90., psi=180., v=1000., mu=90., chi=180., p=300., h=20000.)
 
     @staticmethod
     def get_goal_lower_bounds():
-        goal_vars_type = VelocityVectorControlTask.get_goal_vars()
-        return goal_vars_type(v=0., mu=-90., chi=-180.)
+        goal_vars_type = BFMLevelTurnTask.get_goal_vars()
+        return goal_vars_type(v=0., chi=-180.)
     
     @staticmethod
     def get_goal_higher_bounds():
-        goal_vars_type = VelocityVectorControlTask.get_goal_vars()
-        return goal_vars_type(v=1000., mu=90., chi=180.)
+        goal_vars_type = BFMLevelTurnTask.get_goal_vars()
+        return goal_vars_type(v=1000., chi=180.)
     
