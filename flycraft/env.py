@@ -29,8 +29,8 @@ from terminations.reach_target_termination_single_step import ReachTargetTermina
 class FlyCraftEnv(gym.Env):
 
     def __init__(self, 
-        config_file: Union[Path, str],
-        custom_config: dict={}
+        custom_config: dict={},
+        config_file: Union[Path, str]=Path(PROJECT_ROOT_DIR / "configs" / "NMR.json"),
     ) -> None:
         # define spaces
         state_mins = VelocityVectorControlTask.get_state_lower_bounds()
@@ -44,6 +44,8 @@ class FlyCraftEnv(gym.Env):
                 achieved_goal = spaces.Box(low=np.array(goal_mins, dtype=np.float32), high=np.array(goal_maxs, dtype=np.float32)),
             )
         )
+        
+        print(f"load config from: {config_file}")
 
         self.env_config: dict = load_config(config_file)
         update_nested_dict(self.env_config, custom_config)

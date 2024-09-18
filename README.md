@@ -33,12 +33,13 @@ pip install -e fly-craft
 
 ## Usage
 
+### Basic usage
+
 ```python
 import gymnasium as gym
 import flycraft
 
-env = gym.make('FlyCraft-v0')
-
+env = gym.make('FlyCraft-v0')  # use default configurations
 observation, info = env.reset()
 
 for _ in range(500):
@@ -51,7 +52,38 @@ for _ in range(500):
 env.close()
 ```
 
-## Documentation
+### The four methods to initialize environment
+
+```python
+# 1.use default configurations
+env = gym.make('FlyCraft-v0')
+
+# 2.pass configurations through config_file (Path or str)
+env = gym.make('FlyCraft-v0', config_file=PROJECT_ROOT_DIR / "configs" / "NMR.json")
+
+# 3.pass configurations through custom_config (dict), this method will load default configurations from default path, then update the default config with custom_config
+env = gym.make(
+    'FlyCraft-v0', 
+    custom_config={
+        "task": {
+            "control_mode": "end_to_end_mode",
+        }
+    }
+)
+
+# 4.pass configurations through both config_file and custom_config. FlyCraft load config from config_file firstly, then update the loaded config with custom_config
+env = gym.make(
+    'FlyCraft-v0',
+    config_file=PROJECT_ROOT_DIR / "configs" / "NMR.json",
+    custom_config={
+        "task": {
+            "control_mode": "end_to_end_mode",
+        }
+    }
+)
+```
+
+## Configuration Details
 
 [Here](https://github.com/GongXudong/fly-craft/tree/main/flycraft/configs/MR_for_HER.json) is an example of the configuration, which consists of 4 blocks:
 
