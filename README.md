@@ -189,6 +189,10 @@ The configurations about termination conditions, including:
 
 1. Xudong, Gong, et al. "Iterative Regularized Policy Optimization with Imperfect Demonstrations." Forty-first International Conference on Machine Learning. 2024.
 
+2. Xudong, Gong, et al. "Goal-Conditioned On-Policy Reinforcement Learning." Advances in Neural Information Processing Systems. 2024.
+
+3. Dawei, Feng, et al. "Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies." IEEE International Symposium on Parallel and Distributed Processing with Applications. 2024.
+
 ## Citation
 
 Cite as
