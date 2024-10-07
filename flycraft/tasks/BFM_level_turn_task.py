@@ -6,7 +6,7 @@ from gymnasium.utils import seeding
 
 from planes.f16_plane import F16Plane
 from tasks.task_base import Task
-from flycraft.tasks.goal_samplers.goal_sampler_for_BFM_level_turn import GoalSampler
+from tasks.goal_samplers.goal_sampler_for_BFM_level_turn import GoalSampler
 
 from rewards.reward_base import RewardBase
 from rewards.for_BFM_level_turn.dense_reward_based_on_velocity_chi import DenseRewardBasedOnAngleAndVelocity

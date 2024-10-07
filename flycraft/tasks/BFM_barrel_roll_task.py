@@ -6,7 +6,7 @@ from gymnasium.utils import seeding
 
 from planes.f16_plane import F16Plane
 from tasks.task_base import Task
-from flycraft.tasks.goal_samplers.goal_sampler_for_BFM_level_turn import GoalSampler
+from tasks.goal_samplers.goal_sampler_for_BFM_level_turn import GoalSampler
 
 from rewards.reward_base import RewardBase
 from rewards.for_BFM_level_turn.dense_reward_based_on_velocity_chi import DenseRewardBasedOnAngleAndVelocity
@@ -310,7 +310,7 @@ class BFMBarrelRollTask(Task):
                 break
         
         if reach_target_termination_func == None:
-            raise ValueError("BFMLevelTurnTask: when using off-policy algorithms, must use the termination condition: ReachTargetTerminationSingleStep!!!")
+            raise ValueError("BFMBarrelRollTask: when using off-policy algorithms, must use the termination condition: ReachTargetTerminationSingleStep!!!")
 
         # make tmp_achieved_goal and tmp_desired_goal be of shape (batch, goal_dim)
         if len(achieved_goal.shape) == 1:
@@ -320,11 +320,11 @@ class BFMBarrelRollTask(Task):
             tmp_achieved_goal = achieved_goal
             tmp_desired_goal = desired_goal
         else:
-            raise ValueError("BFMLevelTurnTask: the shape of achieved goal mush be 1-D or 2-D!")
+            raise ValueError("BFMBarrelRollTask: the shape of achieved goal mush be 1-D or 2-D!")
 
         terminated_arr = []
         for tmp_a, tmp_d in zip(tmp_achieved_goal, tmp_desired_goal):
-            state_var = BFMLevelTurnTask.get_state_vars()
+            state_var = BFMBarrelRollTask.get_state_vars()
             cur_state_namedtuple = state_var(phi=0, theta=0, psi=0, v=tmp_a[0], mu=0, chi=tmp_a[1], p=0, h=0)  # TODO: 从info中读取mu的值
 
             ternimated, truncated = reach_target_termination_func.get_termination(
@@ -356,11 +356,11 @@ class BFMBarrelRollTask(Task):
             tmp_desired_goals = desired_goal
             tmp_infos = info
         else:
-            raise ValueError("BFMLevelTurnTask: the shape of achieved goal mush be 1-D or 2-D!")
+            raise ValueError("BFMBarrelRollTask: the shape of achieved goal mush be 1-D or 2-D!")
         
         # compute reward: base on self.reward_funcs
         reward_arr = []
-        state_var = BFMLevelTurnTask.get_state_vars()
+        state_var = BFMBarrelRollTask.get_state_vars()
 
         for tmp_a, tmp_d, tmp_info in zip(tmp_achieved_goals, tmp_desired_goals, tmp_infos):
             # 使用self.reward_funcs中的所有奖励函数计算reward
@@ -396,7 +396,7 @@ class BFMBarrelRollTask(Task):
     
     @staticmethod
     def convert_dict_to_state_vars(state_dict:dict) -> namedtuple:
-        """将仿真器返回的字典类型观测转换为环境定义的观测(BFMLevelTurnTask.get_state_vars()定义的namedtuple)
+        """将仿真器返回的字典类型观测转换为环境定义的观测(BFMBarrelRollTask.get_state_vars()定义的namedtuple)
 
         Args:
             state_dict (dict): 键包括：lef, npos, epos, h, alpha, beta, phi, theta, psi, p, q, r, v, vn, ve, vh, nx, ny, nz, ele, ail, rud, thrust, lon, lat, mu, chi
@@ -405,7 +405,7 @@ class BFMBarrelRollTask(Task):
             namedtuple: _description_
         """
 
-        state_vars_type = BFMLevelTurnTask.get_state_vars()
+        state_vars_type = BFMBarrelRollTask.get_state_vars()
         return state_vars_type(
             phi=state_dict['phi'], theta=state_dict['theta'], psi=state_dict['psi'], 
             v=state_dict['v'], mu=state_dict['mu'], chi=state_dict['chi'],
@@ -419,7 +419,7 @@ class BFMBarrelRollTask(Task):
         Returns:
             _type_: _description_
         """
-        state_vars_type = BFMLevelTurnTask.get_state_vars()
+        state_vars_type = BFMBarrelRollTask.get_state_vars()
         return state_vars_type(phi=-180., theta=-90., psi=-180., v=0., mu=-90., chi=-180., p=-300., h=0.)
 
     @staticmethod
@@ -429,16 +429,16 @@ class BFMBarrelRollTask(Task):
         Returns:
             _type_: _description_
         """
-        state_vars_type = BFMLevelTurnTask.get_state_vars()
+        state_vars_type = BFMBarrelRollTask.get_state_vars()
         return state_vars_type(phi=180., theta=90., psi=180., v=1000., mu=90., chi=180., p=300., h=20000.)
 
     @staticmethod
     def get_goal_lower_bounds():
-        goal_vars_type = BFMLevelTurnTask.get_goal_vars()
+        goal_vars_type = BFMBarrelRollTask.get_goal_vars()
         return goal_vars_type(v=0., chi=-180.)
     
     @staticmethod
     def get_goal_higher_bounds():
-        goal_vars_type = BFMLevelTurnTask.get_goal_vars()
+        goal_vars_type = BFMBarrelRollTask.get_goal_vars()
         return goal_vars_type(v=1000., chi=180.)
     

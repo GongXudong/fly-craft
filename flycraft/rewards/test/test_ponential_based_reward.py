@@ -8,7 +8,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from rewards.ponential_reward import PonentialReward1, PonentialReward2, ScaledPonentialReward2
-from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
+from tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.load_config import load_config
 
 

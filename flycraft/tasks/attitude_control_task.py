@@ -6,7 +6,7 @@ from gymnasium.utils import seeding
 
 from planes.f16_plane import F16Plane
 from tasks.task_base import Task
-from flycraft.tasks.goal_samplers.goal_sampler_for_attitude_control import GoalSampler
+from tasks.goal_samplers.goal_sampler_for_attitude_control import GoalSampler
 
 from rewards.reward_base import RewardBase
 from rewards.for_attitude_control.dense_reward_based_on_velocity_phi_theta import DenseRewardBasedOnAngleAndVelocity

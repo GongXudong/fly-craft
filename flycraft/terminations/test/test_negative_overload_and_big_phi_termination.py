@@ -8,7 +8,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
-from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
+from tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.load_config import load_config
 
 
