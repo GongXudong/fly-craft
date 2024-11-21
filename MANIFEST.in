@@ -1,1 +1,1 @@
-recursive-include flycraft *.txt *.dat *.so *.lib *.dll
+recursive-include flycraft *.txt *.dat *.so *.lib *.dll *.json
