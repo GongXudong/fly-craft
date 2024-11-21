@@ -353,7 +353,11 @@ class VelocityVectorControlTask(Task):
         elif len(achieved_goal.shape) == 2:
             tmp_achieved_goals = achieved_goal
             tmp_desired_goals = desired_goal
+            # check: the length of tmp_infos must be the same with tmp_desired_goals!!!
             tmp_infos = info
+            if isinstance(info, dict):
+                tmp_infos = [info] * tmp_achieved_goals.shape[0]
+            assert len(info) == tmp_achieved_goals.shape[0], "In compute_reward: the length of info must be the same with desired_goals!"
         else:
             raise ValueError("VelocityVectorControlTask: the shape of achieved goal mush be 1-D or 2-D!")
         
