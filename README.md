@@ -5,6 +5,7 @@ An efficient goal-conditioned reinforcement learning environment for fixed-wing 
 [![PyPI version](https://img.shields.io/pypi/v/flycraft.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/flycraft/)
 [![Downloads](https://static.pepy.tech/badge/flycraft)](https://pepy.tech/project/flycraft)
 [![GitHub](https://img.shields.io/github/license/gongxudong/fly-craft.svg)](LICENSE.txt)
+[![Static Badge](https://img.shields.io/badge/Paper-ICLR2025-green?link=https%3A%2F%2Fopenreview.net%2Fforum%3Fid%3D5xSRg3eYZz)](https://openreview.net/forum?id=5xSRg3eYZz)
 
 ## Demos
 
@@ -15,6 +16,18 @@ The policies are trained by "Iterative Regularized Policy Optimization with Impe
 
 ### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)
 ![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](https://github.com/GongXudong/fly-craft/blob/main/assets/traj_120_50_170.gif)
+
+## Researches on FlyCraft
+
+1. Xudong, Gong, et al. "VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems." International Conference on Learning Representations, **ICLR**. 2025.
+
+2. Xudong, Gong, et al. "Iterative Regularized Policy Optimization with Imperfect Demonstrations." Forty-first International Conference on Machine Learning, **ICML**. 2024.
+
+3. Xudong, Gong, et al. "Goal-Conditioned On-Policy Reinforcement Learning." Advances in Neural Information Processing Systems, **NeurIPS**. 2024.
+
+4. Dawei, Feng, et al. "Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies." IEEE International Symposium on Parallel and Distributed Processing with Applications, ISPA. 2024.
+
+5. Xudong, Gong, et al. "V-Pilot: A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations." IEEE International Conference on Robotics and Automation, **ICRA**. 2025.
 
 ## Installation
 
@@ -183,25 +196,17 @@ The configurations about termination conditions, including:
 
 ### Examples
 
-1. Examples based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples
-
-### Researches on FlyCraft
-
-1. Xudong, Gong, et al. "Iterative Regularized Policy Optimization with Imperfect Demonstrations." Forty-first International Conference on Machine Learning. 2024.
-
-2. Xudong, Gong, et al. "Goal-Conditioned On-Policy Reinforcement Learning." Advances in Neural Information Processing Systems. 2024.
-
-3. Dawei, Feng, et al. "Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies." IEEE International Symposium on Parallel and Distributed Processing with Applications. 2024.
+1. Examples based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples.
 
 ## Citation
 
 Cite as
 
 ```bib
-@article{gong2024flycraft,
-  title        = {FlyCraft: An Efficient Goal-Conditioned Reinforcement Learning Environment for Fixed-Wing UAV Velocity Vector Control},
-  author       = {Gong, Xudong and Wang, Hao and Feng, Dawei and Wang, Weijia},
-  year         = 2024,
-  journal      = {},
+@inproceedings{gong2025vvcgym,
+  title        = {VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems},
+  author       = {Gong, Xudong and Feng, Dawei and Xu, kele and Wang, Weijia and Sun, Zhangjun and Zhou, Xing and Ding, Bo and Wang, Huaimin},
+  booktitle    = {International Conference on Learning Representations},
+  year         = {2025}
 }
 ```
