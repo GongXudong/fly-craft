@@ -17,18 +17,6 @@ The policies are trained by "Iterative Regularized Policy Optimization with Impe
 ### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)
 ![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](https://github.com/GongXudong/fly-craft/blob/main/assets/traj_120_50_170.gif)
 
-## Researches on FlyCraft
-
-1. Xudong, Gong, et al. "VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems." International Conference on Learning Representations, **ICLR**. 2025.
-
-2. Xudong, Gong, et al. "Iterative Regularized Policy Optimization with Imperfect Demonstrations." Forty-first International Conference on Machine Learning, **ICML**. 2024.
-
-3. Xudong, Gong, et al. "Goal-Conditioned On-Policy Reinforcement Learning." Advances in Neural Information Processing Systems, **NeurIPS**. 2024.
-
-4. Dawei, Feng, et al. "Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies." IEEE International Symposium on Parallel and Distributed Processing with Applications, ISPA. 2024.
-
-5. Xudong, Gong, et al. "V-Pilot: A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations." IEEE International Conference on Robotics and Automation, **ICRA**. 2025.
-
 ## Installation
 
 ### Using PyPI
@@ -95,6 +83,28 @@ env = gym.make(
     }
 )
 ```
+
+### Visualization
+
+Please refer to [fly-craft-examples](https://github.com/GongXudong/fly-craft-examples).
+
+## Applications
+
+### Examples
+
+1. Examples based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples.
+
+### Researches on FlyCraft
+
+1. Xudong, Gong, et al. "**_VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems_**." International Conference on Learning Representations. **ICLR, 2025**. [[Paper]](https://openreview.net/forum?id=5xSRg3eYZz)
+
+2. Xudong, Gong, et al. "**_Iterative Regularized Policy Optimization with Imperfect Demonstrations_**." Forty-first International Conference on Machine Learning. **ICML, 2024**. [[Paper]](https://openreview.net/pdf?id=Gp5F6qzwGK)
+
+3. Xudong, Gong, et al. "**_Goal-Conditioned On-Policy Reinforcement Learning_**." Advances in Neural Information Processing Systems. **NeurIPS, 2024**. [[Paper]](https://openreview.net/pdf?id=KP7EUORJYI)
+
+4. Xudong, Gong, et al. "**_V-Pilot: A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations_**." IEEE International Conference on Robotics and Automation. **ICRA, 2025**.
+
+5. Dawei, Feng, et al. "**_Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies_**." IEEE International Symposium on Parallel and Distributed Processing with Applications. **ISPA, 2024**.
 
 ## Configuration Details
 
@@ -191,12 +201,6 @@ The configurations about termination conditions, including:
   * _big_phi_threshold_ Float (deg): when the roll angle exceeds this value for at least 'time_window' seconds, this termination condition is triggered;
   * _is_termination_reward_based_on_steps_left_ Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * _termination_reward_ Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
-
-## Applications
-
-### Examples
-
-1. Examples based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples.
 
 ## Citation
 
