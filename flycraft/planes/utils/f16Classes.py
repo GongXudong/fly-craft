@@ -43,7 +43,13 @@ class Guide(object):
     
     def initLog(self):
         # self.log = open('logs/guideInOut.csv', 'w')
-        self.log = open(os.path.join(PROJECT_ROOT_DIR, "planes", "utils", "logs", "guideInOut.csv"), 'w')
+
+        log_file = os.path.join(PROJECT_ROOT_DIR, "planes", "utils", "logs", "guideInOut.csv")
+        
+        if not Path(log_file).exists():
+            Path(log_file).touch()
+        
+        self.log = open(log_file, 'w')
         usefulKeys = ['cmdMu', 'mu', 'dchi', 'phi', 'cmdPhi', 'cmdNz']
         self.log.write(','.join(usefulKeys))
         self.log.write('\n')
