@@ -5,6 +5,7 @@ An efficient goal-conditioned reinforcement learning environment for fixed-wing 
 [![PyPI version](https://img.shields.io/pypi/v/flycraft.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/flycraft/)
 [![Downloads](https://static.pepy.tech/badge/flycraft)](https://pepy.tech/project/flycraft)
 [![GitHub](https://img.shields.io/github/license/gongxudong/fly-craft.svg)](LICENSE.txt)
+[![Static Badge](https://img.shields.io/badge/Paper-ICLR2025-green?link=https%3A%2F%2Fopenreview.net%2Fforum%3Fid%3D5xSRg3eYZz)](https://openreview.net/forum?id=5xSRg3eYZz)
 
 ## Demos
 
@@ -82,6 +83,28 @@ env = gym.make(
     }
 )
 ```
+
+### Visualization
+
+Please refer to [fly-craft-examples](https://github.com/GongXudong/fly-craft-examples).
+
+## Applications
+
+### Examples
+
+1. Examples based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples.
+
+### Researches on FlyCraft
+
+1. Xudong, Gong, et al. "**_VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems_**." International Conference on Learning Representations. **ICLR, 2025**. [[Paper]](https://openreview.net/forum?id=5xSRg3eYZz)
+
+2. Xudong, Gong, et al. "**_Iterative Regularized Policy Optimization with Imperfect Demonstrations_**." Forty-first International Conference on Machine Learning. **ICML, 2024**. [[Paper]](https://openreview.net/pdf?id=Gp5F6qzwGK)
+
+3. Xudong, Gong, et al. "**_Goal-Conditioned On-Policy Reinforcement Learning_**." Advances in Neural Information Processing Systems. **NeurIPS, 2024**. [[Paper]](https://openreview.net/pdf?id=KP7EUORJYI)
+
+4. Xudong, Gong, et al. "**_V-Pilot: A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations_**." IEEE International Conference on Robotics and Automation. **ICRA, 2025**.
+
+5. Dawei, Feng, et al. "**_Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies_**." IEEE International Symposium on Parallel and Distributed Processing with Applications. **ISPA, 2024**.
 
 ## Configuration Details
 
@@ -179,29 +202,15 @@ The configurations about termination conditions, including:
   * _is_termination_reward_based_on_steps_left_ Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * _termination_reward_ Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
 
-## Applications
-
-### Examples
-
-1. Examples based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples
-
-### Researches on FlyCraft
-
-1. Xudong, Gong, et al. "Iterative Regularized Policy Optimization with Imperfect Demonstrations." Forty-first International Conference on Machine Learning. 2024.
-
-2. Xudong, Gong, et al. "Goal-Conditioned On-Policy Reinforcement Learning." Advances in Neural Information Processing Systems. 2024.
-
-3. Dawei, Feng, et al. "Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies." IEEE International Symposium on Parallel and Distributed Processing with Applications. 2024.
-
 ## Citation
 
 Cite as
 
 ```bib
-@article{gong2024flycraft,
-  title        = {FlyCraft: An Efficient Goal-Conditioned Reinforcement Learning Environment for Fixed-Wing UAV Velocity Vector Control},
-  author       = {Gong, Xudong and Wang, Hao and Feng, Dawei and Wang, Weijia},
-  year         = 2024,
-  journal      = {},
+@inproceedings{gong2025vvcgym,
+  title        = {VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems},
+  author       = {Gong, Xudong and Feng, Dawei and Xu, kele and Wang, Weijia and Sun, Zhangjun and Zhou, Xing and Ding, Bo and Wang, Huaimin},
+  booktitle    = {International Conference on Learning Representations},
+  year         = {2025}
 }
 ```

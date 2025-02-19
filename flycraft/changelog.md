@@ -1,5 +1,11 @@
 # Change logs
 
+current version: 0.1.3
+
+## 0.1.3
+
+Add some default configurations.
+
 ## 0.1.1
 
 Change the configuration passing method. Currently, there are four ways to pass configuration during environment initialization. This change does not affect compatibility, and the training code based on the old version can still run in this version.
