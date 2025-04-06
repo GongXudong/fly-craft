@@ -1,4 +1,4 @@
-# fly-craft <img src="assets/logo.png" align="left" width="5%"/>
+# Fly-Craft <img src="assets/logo.png" align="left" width="5%"/>
 
 An efficient goal-conditioned reinforcement learning environment for fixed-wing UAV velocity vector control based on **Gymnasium**.
 
