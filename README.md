@@ -90,9 +90,9 @@ Please refer to [fly-craft-examples](https://github.com/GongXudong/fly-craft-exa
 
 ## Applications
 
-### Examples
+### Application examples
 
-1. Examples based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples.
+1. Training scripts based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples.
 
 ### Researches on FlyCraft
 
@@ -110,7 +110,7 @@ Please refer to [fly-craft-examples](https://github.com/GongXudong/fly-craft-exa
 
 [Here](https://github.com/GongXudong/fly-craft/tree/main/flycraft/configs/MR_for_HER.json) is an example of the configuration, which consists of 4 blocks:
 
-### task
+### Task
 
 The configurations about task and simulator, including：
 
@@ -120,7 +120,7 @@ The configurations about task and simulator, including：
 * **h0** Int (m): initial altitude of the aircraft.
 * **v0** Int (m/s): initial true air speed of the aircraft.
 
-### goal
+### Desired Goal
 
 The configurations about the definition and sampling method of the desired goal, including:
 
@@ -136,10 +136,10 @@ The configurations about the definition and sampling method of the desired goal,
 * **chi_min** Float (deg): the min value of flight path azimuth angle of desired goal.
 * **chi_max** Float (deg): the max value of flight path azimuth angle of desired goal.
 * **available_goals_file** Str: path of the file of available desired goals. If don't use fixed desired goal and don't sample desired goal randomly, then sample desired goal from the file of available desired goals. The file is a .csv file that has at least four columns: v, mu, chi, length. The column 'length' is used to indicate whether the desired goal represented by the row can be achieved by an expert. If it can be completed, it represents the number of steps required to achieved the desired goal. If it cannot be completed, the value is 0.
-* **sample_reachable_goal** Boolean: when sampling desired goals from available_goals_file, should only those desired goals with length>0 be sampled.
+* **sample_reachable_goal** Boolean: when sampling desired goals from _available_goals_file_, should only those desired goals with length>0 be sampled.
 * **sample_goal_noise_std** Tuple[Float]: a tuple with three float. The standard deviation used to add Gaussian noise to the true air speed, flight path elevation angle, and flight path azimuth angle of the sampled desired goal.
 
-### rewards
+### Rewards
 
 The configurations about rewards, including:
 
@@ -153,7 +153,7 @@ The configurations about rewards, including:
   * _use_ Boolean: whether use this reward;
   * _reward_constant_ Float: the reward when achieving the desired goal.
 
-### terminations
+### Terminations
 
 The configurations about termination conditions, including:
 
@@ -201,6 +201,14 @@ The configurations about termination conditions, including:
   * _big_phi_threshold_ Float (deg): when the roll angle exceeds this value for at least 'time_window' seconds, this termination condition is triggered;
   * _is_termination_reward_based_on_steps_left_ Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * _termination_reward_ Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
+
+### Cases
+
+1. Using fixed desired goal of $(u, \mu, \chi) = (100, -25， 75)$, [link](https://github.com/GongXudong/fly-craft-examples/blob/main/configs/env/fixed_target/env_config_for_ppo_100_-25_75.json).
+
+2. Sampling desired goal $(u, \mu, \chi)$ randomly from $[150, 250] \times [-30， 30] \times [-60, 60]$, [link](https://github.com/GongXudong/fly-craft-examples/blob/main/configs/env/D2D/env_config_for_ppo_medium_b_05.json).
+
+3. Sampling desired goal $(u, \mu, \chi)$ randomly from a pre-defined set (specified by config["goal"]["available_goals_file"]), [link](https://github.com/GongXudong/fly-craft-examples/blob/main/configs/env/IRPO/env_hard_guidance_MR_config_for_ppo_with_dg_from_demo1.json).
 
 ## Citation
 
