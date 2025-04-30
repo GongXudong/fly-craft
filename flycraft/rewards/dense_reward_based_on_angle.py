@@ -13,14 +13,21 @@ from rewards.reward_base import RewardBase
 from utils.geometry_utils import angle_of_2_3d_vectors
 
 
-class DenseReward(RewardBase):
+class DenseRewardBasedOnAngle(RewardBase):
     """过程奖励，根据目标速度矢量与飞机当前速度矢量的夹角给出的负奖励。例如：目标速度矢量与飞机当前速度矢量的夹角为a，奖励为：-(a / 180) ^ b，其中b为预设的常量。
 
     Args:
         RewardBase (_type_): _description_
     """
-    def __init__(self, b: float = 1., log_history_reward: bool = True, my_logger: logging.Logger = None) -> None:
+    def __init__(
+            self, 
+            b: float = 1., 
+            angle_scale: float = 180., 
+            log_history_reward: bool = True, 
+            my_logger: logging.Logger = None
+        ) -> None:
         self.b = b
+        self.angle_scale = angle_scale
         super().__init__(is_potential=False, log_history_reward=log_history_reward, my_logger=my_logger)
     
     def get_reward(self, state: Union[namedtuple, np.ndarray], **kwargs) -> float:
@@ -52,7 +59,7 @@ class DenseReward(RewardBase):
 
         angle = angle_of_2_3d_vectors(plane_current_velocity_vector, target_velocity_vector)
 
-        return -np.power(angle / 180., self.b)
+        return -np.power(angle / self.angle_scale, self.b)
 
     def reset(self):
         super().reset()

@@ -143,12 +143,15 @@ The configurations about the definition and sampling method of the desired goal,
 
 The configurations about rewards, including:
 
-* **dense** Dict: The configurations of the dense reward
+* **dense** Dict: The configurations of the dense reward that calculated by the error on angle and on the true air speed
   * _use_ Boolean: whether use this reward;
   * _b_ Float: indicates the exponent used for each reward component;
   * _angle_weight_ Float [0.0, 1.0]: the coefficient of the angle error component of reward;
   * _angle_scale_ Float (deg): the scalar used to scale the error in direction of velocity vector;
   * _velocity_scale_ Float (m/s): the scalar used to scale the error in true air speed of velocity vector.
+* **dense_angle_only** Dict: The configurations of the dense reward that calculated by the error on angle only
+  * _use_ Boolean: whether use this reward;
+  * _b_ Float: indicates the exponent used for each reward component.
 * **sparse** Dict: The configurations of the sparse reward
   * _use_ Boolean: whether use this reward;
   * _reward_constant_ Float: the reward when achieving the desired goal.

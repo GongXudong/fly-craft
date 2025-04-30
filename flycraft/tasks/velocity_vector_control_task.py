@@ -10,6 +10,7 @@ from tasks.goal_samplers.goal_sampler_for_velocity_vector_control import GoalSam
 
 from rewards.reward_base import RewardBase
 from rewards.dense_reward_based_on_angle_and_velocity import DenseRewardBasedOnAngleAndVelocity
+from rewards.dense_reward_based_on_angle import DenseRewardBasedOnAngle
 from rewards.sparse_reward import SparseReward
 
 from terminations.termination_base import TerminationBase
@@ -151,6 +152,13 @@ class VelocityVectorControlTask(Task):
                             angle_scale=tmp_cfg.get("angle_scale", 180),
                             velocity_scale=tmp_cfg.get("velocity_scale", 100),
                             angle_weight=tmp_cfg.get("angle_weight", 0.5),
+                        )
+                    )
+                elif rwd == "dense_angle_only":
+                    self.reward_funcs.append(
+                        DenseRewardBasedOnAngle(
+                            b=tmp_cfg.get("b", 0.5),
+                            angle_scale=tmp_cfg.get("angle_scale", 180),
                         )
                     )
                 elif rwd == "sparse":
