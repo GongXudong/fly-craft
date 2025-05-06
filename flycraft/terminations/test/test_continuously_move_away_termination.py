@@ -41,10 +41,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
 
         self.continuousely_move_away_termination.reset()
         # 正确使用方式，在整个轨迹上依次调用！！！！！
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res = self.continuousely_move_away_termination.get_termination(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v, 
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -58,10 +59,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res2 = self.continuousely_move_away_termination.get_termination_and_reward(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -89,10 +91,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
 
         self.continuousely_move_away_termination.reset()
         # 正确使用方式，在整个轨迹上依次调用！！！！！
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res = self.continuousely_move_away_termination.get_termination(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -106,10 +109,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res2 = self.continuousely_move_away_termination.get_termination_and_reward(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -137,10 +141,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
         #     print(item.chi)
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res = self.continuousely_move_away_termination.get_termination(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -153,10 +158,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res2 = self.continuousely_move_away_termination.get_termination_and_reward(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -182,10 +188,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
         #     print(item.chi)
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res = self.continuousely_move_away_termination.get_termination(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -198,10 +205,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res2 = self.continuousely_move_away_termination.get_termination_and_reward(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -221,10 +229,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
         state_list = [self.state_var_type(phi=0., theta=0., psi=0., v=200., mu=20., chi=40., p=0., h=0.) for i in range(episode_length)]
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res = self.continuousely_move_away_termination.get_termination(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -237,10 +246,11 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res2 = self.continuousely_move_away_termination.get_termination_and_reward(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,

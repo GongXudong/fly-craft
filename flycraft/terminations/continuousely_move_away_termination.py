@@ -43,13 +43,13 @@ class ContinuouselyMoveAwayTermination(TerminationBase):
         self.chi_continuously_increasing_num = -1  # 到当前step为止，连续增大的chi误差的数量
 
     
-    def _get_termination(self, state: namedtuple, goal_v: float, goal_mu: float, goal_chi: float):
+    def _get_termination(self, next_state: namedtuple, goal_v: float, goal_mu: float, goal_chi: float):
         # mu的范围是[-90, 90]，不存在-90与90的跨越问题
-        cur_mu_error = abs(goal_mu - state.mu)
+        cur_mu_error = abs(goal_mu - next_state.mu)
 
         # chi的范围是[-180, 180]，存在-180与180的跨越问题
         # 例如，从target_chi=-179, chi=179, 此时tmp_chi_error=358, 二者间的误差实际应该是360 - 358 = 2
-        tmp_chi_error = abs(goal_chi - state.chi)
+        tmp_chi_error = abs(goal_chi - next_state.chi)
         cur_chi_error = min(tmp_chi_error, 360. - tmp_chi_error)
 
         # 当mu和chi的error很小时，不再考虑这个终止条件
@@ -96,25 +96,27 @@ class ContinuouselyMoveAwayTermination(TerminationBase):
         return terminated, truncated
     
     def get_termination(self, state: namedtuple, **kwargs) -> Tuple[bool, bool]:
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
         assert "goal_v" in kwargs, "参数中需要包括goal_v，再调用get_termination方法"
         assert "goal_mu" in kwargs, "参数中需要包括goal_mu，再调用get_termination方法"
         assert "goal_chi" in kwargs, "参数中需要包括goal_chi，再调用get_termination方法"
 
         return self._get_termination(
-            state=state, 
+            next_state=kwargs["next_state"], 
             goal_v=kwargs["goal_v"], 
             goal_mu=kwargs["goal_mu"], 
             goal_chi=kwargs["goal_chi"]
         )
     
     def get_termination_and_reward(self, state: namedtuple, **kwargs) -> Tuple[bool, bool, float]:
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
         assert "goal_v" in kwargs, "参数中需要包括goal_v，再调用get_termination方法"
         assert "goal_mu" in kwargs, "参数中需要包括goal_mu，再调用get_termination方法"
         assert "goal_chi" in kwargs, "参数中需要包括goal_chi，再调用get_termination方法"
         assert "step_cnt" in kwargs, "参数中需要包括step_cnt"
 
         terminated, truncated = self._get_termination(
-            state=state,
+            next_state=kwargs["next_state"],
             goal_v=kwargs["goal_v"], 
             goal_mu=kwargs["goal_mu"], 
             goal_chi=kwargs["goal_chi"]

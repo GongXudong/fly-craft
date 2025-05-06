@@ -31,16 +31,17 @@ class ContinuouselyMoveAwayTermination2Test(unittest.TestCase):
         """速度矢量误差持续增大
         """
         tmp_mu = 30.
-        episode_length = 21
+        episode_length = 22
         goal_v, goal_mu, goal_chi = 110., 10., -135.
         state_list = [self.state_var_type(phi=0., theta=0., psi=0., v=110., mu=(tmp_mu:=tmp_mu + np.random.rand()*0.1), chi=-135., p=0., h=0.) for i in range(episode_length)]
 
         self.continuousely_move_away_termination.reset()
         # 正确使用方式，在整个轨迹上依次调用！！！！！
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res = self.continuousely_move_away_termination.get_termination(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -53,10 +54,11 @@ class ContinuouselyMoveAwayTermination2Test(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res2 = self.continuousely_move_away_termination.get_termination_and_reward(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1], 
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -72,16 +74,17 @@ class ContinuouselyMoveAwayTermination2Test(unittest.TestCase):
         self.assertAlmostEqual(res2[2], -1.)
 
     def test_has_not_reach_length_1(self):
-        episode_length = 19
+        episode_length = 20
         goal_v, goal_mu, goal_chi = 200., 20., 30.
         state_list = [self.state_var_type(phi=0., theta=0., psi=0., v=200., mu=20., chi=40., p=0., h=0.) for i in range(episode_length)]
         v_list = np.random.random((episode_length, 3))
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res = self.continuousely_move_away_termination.get_termination(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,
@@ -97,10 +100,11 @@ class ContinuouselyMoveAwayTermination2Test(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.continuousely_move_away_termination.reset()
-        for i in range(episode_length):
-            tmp_state_list = state_list[:i+1]
+        for i in range(episode_length-1):
+            tmp_state_list = state_list[:i+2]
             res2 = self.continuousely_move_away_termination.get_termination_and_reward(
-                state=tmp_state_list[-1], 
+                state=tmp_state_list[-2],
+                next_state=tmp_state_list[-1],
                 goal_v=goal_v,
                 goal_mu=goal_mu,
                 goal_chi=goal_chi,

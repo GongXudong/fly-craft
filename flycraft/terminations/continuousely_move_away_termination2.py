@@ -86,6 +86,7 @@ class ContinuouselyMoveAwayTermination2(TerminationBase):
         return terminated, truncated
     
     def get_termination(self, state: namedtuple, **kwargs) -> Tuple[bool, bool]:
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
         assert "goal_v" in kwargs, "参数中需要包括goal_v，再调用get_termination方法"
         assert "goal_mu" in kwargs, "参数中需要包括goal_mu，再调用get_termination方法"
         assert "goal_chi" in kwargs, "参数中需要包括goal_chi，再调用get_termination方法"
@@ -98,12 +99,13 @@ class ContinuouselyMoveAwayTermination2(TerminationBase):
             goal_v=kwargs["goal_v"],
             goal_mu=kwargs["goal_mu"],
             goal_chi=kwargs["goal_chi"],
-            ve=state.v * np.cos(np.deg2rad(state.mu)) * np.sin(np.deg2rad(state.chi)), 
-            vn=state.v * np.cos(np.deg2rad(state.mu)) * np.cos(np.deg2rad(state.chi)), 
-            vh=state.v * np.sin(np.deg2rad(state.mu))
+            ve=kwargs["next_state"].v * np.cos(np.deg2rad(kwargs["next_state"].mu)) * np.sin(np.deg2rad(kwargs["next_state"].chi)), 
+            vn=kwargs["next_state"].v * np.cos(np.deg2rad(kwargs["next_state"].mu)) * np.cos(np.deg2rad(kwargs["next_state"].chi)), 
+            vh=kwargs["next_state"].v * np.sin(np.deg2rad(kwargs["next_state"].mu))
         )
     
     def get_termination_and_reward(self, state: namedtuple, **kwargs) -> Tuple[bool, bool, float]:
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
         assert "goal_v" in kwargs, "参数中需要包括goal_v，再调用get_termination方法"
         assert "goal_mu" in kwargs, "参数中需要包括goal_mu，再调用get_termination方法"
         assert "goal_chi" in kwargs, "参数中需要包括goal_chi，再调用get_termination方法"
@@ -117,9 +119,9 @@ class ContinuouselyMoveAwayTermination2(TerminationBase):
             goal_v=kwargs["goal_v"],
             goal_mu=kwargs["goal_mu"],
             goal_chi=kwargs["goal_chi"],
-            ve=state.v * np.cos(np.deg2rad(state.mu)) * np.sin(np.deg2rad(state.chi)), 
-            vn=state.v * np.cos(np.deg2rad(state.mu)) * np.cos(np.deg2rad(state.chi)), 
-            vh=state.v * np.sin(np.deg2rad(state.mu))
+            ve=kwargs["next_state"].v * np.cos(np.deg2rad(kwargs["next_state"].mu)) * np.sin(np.deg2rad(kwargs["next_state"].chi)), 
+            vn=kwargs["next_state"].v * np.cos(np.deg2rad(kwargs["next_state"].mu)) * np.cos(np.deg2rad(kwargs["next_state"].chi)), 
+            vh=kwargs["next_state"].v * np.sin(np.deg2rad(kwargs["next_state"].mu))
         )
         # reward = self.termination_reward if terminated else 0.
 

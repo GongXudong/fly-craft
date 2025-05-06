@@ -151,7 +151,8 @@ The configurations about rewards, including:
   * _velocity_scale_ Float (m/s): the scalar used to scale the error in true air speed of velocity vector.
 * **dense_angle_only** Dict: The configurations of the dense reward that calculated by the error on angle only
   * _use_ Boolean: whether use this reward;
-  * _b_ Float: indicates the exponent used for each reward component.
+  * _b_ Float: indicates the exponent used for each reward component;
+  * _angle_scale_ Float (deg): the scalar used to scale the error in direction of velocity vector.
 * **sparse** Dict: The configurations of the sparse reward
   * _use_ Boolean: whether use this reward;
   * _reward_constant_ Float: the reward when achieving the desired goal.

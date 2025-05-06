@@ -44,19 +44,21 @@ class ExtremeStateTermination(TerminationBase):
         return False, False
 
     def get_termination(self, state: namedtuple, **kwargs) -> Tuple[bool, bool]:
-        assert 'v' in state._fields, "state中必须包含v"
-        assert 'p' in state._fields, "state中必须包含p"
-        v = state.v
-        p = state.p
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
+        assert 'v' in kwargs["next_state"]._fields, "next_state中必须包含v"
+        assert 'p' in kwargs["next_state"]._fields, "next_state中必须包含p"
+        v = kwargs["next_state"].v
+        p = kwargs["next_state"].p
         return self._get_termination(v=v, p=p)
 
     def get_termination_and_reward(self, state: namedtuple, **kwargs) -> Tuple[bool, bool, float]:
-        assert 'v' in state._fields, "state中必须包含v"
-        assert 'p' in state._fields, "state中必须包含p"
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
+        assert 'v' in kwargs["next_state"]._fields, "next_state中必须包含v"
+        assert 'p' in kwargs["next_state"]._fields, "next_state中必须包含p"
         assert "step_cnt" in kwargs, "参数中需要包括step_cnt"
 
-        v = state.v
-        p = state.p
+        v = kwargs["next_state"].v
+        p = kwargs["next_state"].p
         terminated, truncated = self._get_termination(v=v, p=p)
         # reward = self.termination_reward if terminated else 0.
 

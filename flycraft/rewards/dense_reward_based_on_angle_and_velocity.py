@@ -70,7 +70,7 @@ class DenseRewardBasedOnAngleAndVelocity(RewardBase):
         cliped_velocity_error = np.clip(velocity_error / self.velocity_scale, a_min=0., a_max=1.)
         velocity_base_reward = - np.power(cliped_velocity_error, self.b)
 
-        return self.angle_weight *  angle_base_reward + (1. - self.angle_weight) * velocity_base_reward
+        return self.angle_weight * angle_base_reward + (1. - self.angle_weight) * velocity_base_reward
 
     def reset(self):
         super().reset()

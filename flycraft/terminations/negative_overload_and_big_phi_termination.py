@@ -36,8 +36,8 @@ class NegativeOverloadAndBigPhiTermination(TerminationBase):
 
         self.invalid_cnt = 0
 
-    def _get_termination(self, state: namedtuple, nz: float) -> Tuple[bool, bool]:
-        if abs(state.phi) > self.big_phi_threshold and nz < self.negative_overload_threshold:
+    def _get_termination(self, next_state: namedtuple, next_state_nz: float) -> Tuple[bool, bool]:
+        if abs(next_state.phi) > self.big_phi_threshold and next_state_nz < self.negative_overload_threshold:
             self.invalid_cnt += 1
         else:
             self.invalid_cnt = 0
@@ -48,15 +48,17 @@ class NegativeOverloadAndBigPhiTermination(TerminationBase):
         return False, False
     
     def get_termination(self, state: namedtuple, **kwargs) -> Tuple[bool, bool]:
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
         assert "nz" in kwargs, "参数中需要包括nz，再调用get_termination方法"
 
-        return self._get_termination(state=state, nz=kwargs["nz"])
+        return self._get_termination(next_state=kwargs["next_state"], next_state_nz=kwargs["nz"])
 
     def get_termination_and_reward(self, state: namedtuple, **kwargs) -> Tuple[bool, bool, float]:
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
         assert "nz" in kwargs, "参数中需要包括nz，再调用get_termination方法"
         assert "step_cnt" in kwargs, "参数中需要包括step_cnt"
 
-        terminated, truncated = self._get_termination(state=state, nz=kwargs["nz"])
+        terminated, truncated = self._get_termination(next_state=kwargs["next_state"], next_state_nz=kwargs["nz"])
         # reward = self.termination_reward if terminated else 0.
         
         return terminated, truncated, self.get_termination_penalty(terminated=terminated, steps_cnt=kwargs["step_cnt"])

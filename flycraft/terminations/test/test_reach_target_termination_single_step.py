@@ -12,7 +12,7 @@ from tasks.velocity_vector_control_task import VelocityVectorControlTask
 from utils.load_config import load_config
 
 
-class ReachTargetTerminationTest(unittest.TestCase):
+class ReachTargetTerminationSingleStepTest(unittest.TestCase):
 
     def setUp(self) -> None:
         super().setUp()
@@ -33,8 +33,9 @@ class ReachTargetTerminationTest(unittest.TestCase):
         goal_v, goal_mu, goal_chi = 200., 20., 30.
         state_list = [self.state_var_type(phi=0., theta=0., psi=0., v=200., mu=19.1, chi=30., p=0., h=0.) for i in range(episode_length)]
         res = self.reach_target_termination.get_termination(
-            state=state_list[-1], 
-            goal_v=goal_v, 
+            state=state_list[-2],
+            next_state=state_list[-1],
+            goal_v=goal_v,
             goal_mu=goal_mu,
             goal_chi=goal_chi,
         )
@@ -42,11 +43,12 @@ class ReachTargetTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         res2 = self.reach_target_termination.get_termination_and_reward(
-            state=state_list[-1], 
-            goal_v=goal_v, 
+            state=state_list[-2],
+            next_state=state_list[-1],
+            goal_v=goal_v,
             goal_mu=goal_mu,
             goal_chi=goal_chi,
-            step_cnt=100
+            step_cnt=100,
         )
         self.assertTrue(res2[0])
         self.assertFalse(res2[1])
@@ -59,8 +61,9 @@ class ReachTargetTerminationTest(unittest.TestCase):
         goal_v, goal_mu, goal_chi = 200., 20., 30.
         state_list = [self.state_var_type(phi=0., theta=0., psi=0., v=189., mu=20., chi=30., p=0., h=0.) for i in range(episode_length)]
         res = self.reach_target_termination.get_termination(
-            state=state_list[-1], 
-            goal_v=goal_v, 
+            state=state_list[-2],
+            next_state=state_list[-1],
+            goal_v=goal_v,
             goal_mu=goal_mu,
             goal_chi=goal_chi,
         )
@@ -68,11 +71,12 @@ class ReachTargetTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         res2 = self.reach_target_termination.get_termination_and_reward(
-            state=state_list[-1], 
-            goal_v=goal_v, 
+            state=state_list[-2],
+            next_state=state_list[-1],
+            goal_v=goal_v,
             goal_mu=goal_mu,
             goal_chi=goal_chi,
-            step_cnt=100
+            step_cnt=100,
         )
         self.assertFalse(res2[0])
         self.assertFalse(res2[1])
@@ -85,8 +89,9 @@ class ReachTargetTerminationTest(unittest.TestCase):
         goal_v, goal_mu, goal_chi = 200., 20., 30.
         state_list = [self.state_var_type(phi=0., theta=0., psi=0., v=200., mu=21.1, chi=30., p=0., h=0.) for i in range(episode_length)]
         res = self.reach_target_termination.get_termination(
-            state=state_list[-1], 
-            goal_v=goal_v, 
+            state=state_list[-2],
+            next_state=state_list[-1],
+            goal_v=goal_v,
             goal_mu=goal_mu,
             goal_chi=goal_chi,
         )
@@ -94,11 +99,12 @@ class ReachTargetTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         res2 = self.reach_target_termination.get_termination_and_reward(
-            state=state_list[-1], 
-            goal_v=goal_v, 
+            state=state_list[-2],
+            next_state=state_list[-1], 
+            goal_v=goal_v,
             goal_mu=goal_mu,
             goal_chi=goal_chi,
-            step_cnt=100
+            step_cnt=100,
         )
         self.assertFalse(res2[0])
         self.assertFalse(res2[1])

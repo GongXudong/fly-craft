@@ -39,15 +39,17 @@ class CrashTermination(TerminationBase):
         return False, False
 
     def get_termination(self, state: namedtuple, **kwargs) -> Tuple[bool, bool]:
-        assert 'h' in state._fields, "state中必须包含h"
-        h = state.h
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
+        assert 'h' in kwargs["next_state"]._fields, "next_state中必须包含h"
+        h = kwargs["next_state"].h
         return self._get_termination(h=h)
 
     def get_termination_and_reward(self, state: namedtuple, **kwargs) -> Tuple[bool, bool, float]:
-        assert 'h' in state._fields, "state中必须包含h"
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
+        assert 'h' in kwargs["next_state"]._fields, "next_state中必须包含h"
         assert "step_cnt" in kwargs, "参数中需要包括step_cnt"
 
-        h = state.h
+        h = kwargs["next_state"].h
         terminated, truncated = self._get_termination(h=h)
         # reward = self.termination_reward if terminated else 0.
         return terminated, truncated, self.get_termination_penalty(terminated=terminated, steps_cnt=kwargs["step_cnt"])

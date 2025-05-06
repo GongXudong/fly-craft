@@ -48,30 +48,32 @@ class ReachTargetTerminationSingleStep(TerminationBase):
             return False, False
 
     def get_termination(self, state, **kwargs) -> Tuple[bool, bool]:
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
         assert "goal_v" in kwargs, "参数中需要包括goal_v，再调用get_termination方法"
         assert "goal_mu" in kwargs, "参数中需要包括goal_mu，再调用get_termination方法"
         assert "goal_chi" in kwargs, "参数中需要包括goal_chi，再调用get_termination方法"
 
         return self._get_termination(
-            v=state.v,
-            mu=state.mu,
-            chi=state.chi,
+            v=kwargs["next_state"].v,
+            mu=kwargs["next_state"].mu,
+            chi=kwargs["next_state"].chi,
             goal_v=kwargs["goal_v"], 
             goal_mu=kwargs["goal_mu"], 
             goal_chi=kwargs["goal_chi"],
         )
 
     def get_termination_and_reward(self, state, **kwargs) -> Tuple[bool, bool, float]:
+        assert "next_state" in kwargs, "参数中需要包括next_state，再调用get_termination方法"
         assert "goal_v" in kwargs, "参数中需要包括goal_v，再调用get_termination方法"
         assert "goal_mu" in kwargs, "参数中需要包括goal_mu，再调用get_termination方法"
         assert "goal_chi" in kwargs, "参数中需要包括goal_chi，再调用get_termination方法"
 
         terminated, truncated = self._get_termination(
-            v=state.v,
-            mu=state.mu,
-            chi=state.chi,
-            goal_v=kwargs["goal_v"], 
-            goal_mu=kwargs["goal_mu"], 
+            v=kwargs["next_state"].v,
+            mu=kwargs["next_state"].mu,
+            chi=kwargs["next_state"].chi,
+            goal_v=kwargs["goal_v"],
+            goal_mu=kwargs["goal_mu"],
             goal_chi=kwargs["goal_chi"],
         )
         reward = self.termination_reward if terminated else 0.

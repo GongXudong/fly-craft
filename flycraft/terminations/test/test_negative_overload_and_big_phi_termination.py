@@ -32,13 +32,17 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
     def test_1(self):
         """测试长度超过200, phi>60, nz<0 的情况
         """
-        episode_length = 21
+        episode_length = 22
         phi=61.
         state_list = [self.state_var_type(phi=phi, theta=0., psi=0., v=200., mu=0., chi=30., p=0., h=0.) for i in range(episode_length)]
 
         self.negative_overload_and_big_phi_termination.reset()
-        for i in range(episode_length):
-            res = self.negative_overload_and_big_phi_termination.get_termination(state=state_list[i], nz=-1.)
+        for i in range(episode_length-1):
+            res = self.negative_overload_and_big_phi_termination.get_termination(
+                state=state_list[i], 
+                next_state=state_list[i+1],
+                nz=-1.
+            )
             if res[0]:
                 break
         
@@ -46,8 +50,13 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.negative_overload_and_big_phi_termination.reset()
-        for i in range(episode_length):
-            res2 = self.negative_overload_and_big_phi_termination.get_termination_and_reward(state=state_list[i], nz=-1., step_cnt=100)
+        for i in range(episode_length-1):
+            res2 = self.negative_overload_and_big_phi_termination.get_termination_and_reward(
+                state=state_list[i],
+                next_state=state_list[i+1],
+                nz=-1., 
+                step_cnt=100
+            )
             if res2[0]:
                 break
         
@@ -58,13 +67,17 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
     def test_2(self):
         """测试长度超过200, phi<-60, nz<0 的情况
         """
-        episode_length = 21
+        episode_length = 22
         phi=-61.
         state_list = [self.state_var_type(phi=phi, theta=0., psi=0., v=200., mu=0., chi=30., p=0., h=0.) for i in range(episode_length)]
 
         self.negative_overload_and_big_phi_termination.reset()
-        for i in range(episode_length):
-            res = self.negative_overload_and_big_phi_termination.get_termination(state=state_list[i], nz=-1.)
+        for i in range(episode_length-1):
+            res = self.negative_overload_and_big_phi_termination.get_termination(
+                state=state_list[i], 
+                next_state=state_list[i+1],
+                nz=-1.
+            )
             if res[0]:
                 break
         
@@ -72,8 +85,13 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.negative_overload_and_big_phi_termination.reset()
-        for i in range(episode_length):
-            res2 = self.negative_overload_and_big_phi_termination.get_termination_and_reward(state=state_list[i], nz=-1., step_cnt=100)
+        for i in range(episode_length-1):
+            res2 = self.negative_overload_and_big_phi_termination.get_termination_and_reward(
+                state=state_list[i], 
+                next_state=state_list[i+1],
+                nz=-1., 
+                step_cnt=100
+            )
             if res2[0]:
                 break
         
@@ -84,13 +102,17 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
     def test_3(self):
         """测试长度不够的情况
         """
-        episode_length = 19
+        episode_length = 20
         phi=-61.
         state_list = [self.state_var_type(phi=phi, theta=0., psi=0., v=200., mu=0., chi=30., p=0., h=0.) for i in range(episode_length)]
 
         self.negative_overload_and_big_phi_termination.reset()
-        for i in range(episode_length):
-            res = self.negative_overload_and_big_phi_termination.get_termination(state=state_list[i], nz=-1.)
+        for i in range(episode_length-1):
+            res = self.negative_overload_and_big_phi_termination.get_termination(
+                state=state_list[i], 
+                next_state=state_list[i+1],
+                nz=-1.
+            )
             if res[0]:
                 break
         
@@ -98,8 +120,13 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.negative_overload_and_big_phi_termination.reset()
-        for i in range(episode_length):
-            res2 = self.negative_overload_and_big_phi_termination.get_termination_and_reward(state=state_list[i], nz=-1., step_cnt=100)
+        for i in range(episode_length-1):
+            res2 = self.negative_overload_and_big_phi_termination.get_termination_and_reward(
+                state=state_list[i], 
+                next_state=state_list[i+1],
+                nz=-1.,
+                step_cnt=100
+            )
             if res2[0]:
                 break
         
@@ -110,13 +137,17 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
     def test_4(self):
         """测试长度超过200,phi中间有一处小于60度的情况
         """
-        episode_length = 21
+        episode_length = 22
         phi=61.
         state_list = [self.state_var_type(phi=(phi if i != int(episode_length/2) else 59), theta=0., psi=0., v=200., mu=0., chi=30., p=0., h=0.) for i in range(episode_length)]
 
         self.negative_overload_and_big_phi_termination.reset()
-        for i in range(episode_length):
-            res = self.negative_overload_and_big_phi_termination.get_termination(state=state_list[i], nz=-1.)
+        for i in range(episode_length-1):
+            res = self.negative_overload_and_big_phi_termination.get_termination(
+                state=state_list[i], 
+                next_state=state_list[i+1],
+                nz=-1.
+            )
             if res[0]:
                 break
         
@@ -124,8 +155,13 @@ class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):
         self.assertFalse(res[1])
 
         self.negative_overload_and_big_phi_termination.reset()
-        for i in range(episode_length):
-            res2 = self.negative_overload_and_big_phi_termination.get_termination_and_reward(state=state_list[i], nz=-1., step_cnt=100)
+        for i in range(episode_length-1):
+            res2 = self.negative_overload_and_big_phi_termination.get_termination_and_reward(
+                state=state_list[i], 
+                next_state=state_list[i+1],
+                nz=-1.,
+                step_cnt=100
+            )
             if res2[0]:
                 break
         
