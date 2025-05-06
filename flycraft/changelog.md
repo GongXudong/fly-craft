@@ -1,6 +1,14 @@
 # Change logs
 
-current version: 0.1.3
+current version: 0.1.6
+
+## 0.1.6
+
+Update terminations: RT_single_step, NOBR, ES, C, CMA. Now they are calculated by the **next observations**.
+
+## 0.1.5
+
+Add a dense termination, **DenseRewardBasedOnAngle**, which is based on the angle error of velocity vector only.
 
 ## 0.1.3
 
