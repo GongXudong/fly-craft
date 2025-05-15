@@ -96,15 +96,21 @@ Please refer to [fly-craft-examples](https://github.com/GongXudong/fly-craft-exa
 
 ### Researches on FlyCraft
 
-1. Xudong, Gong, et al. "**_VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems_**." International Conference on Learning Representations. **ICLR, 2025**. [[Paper]](https://openreview.net/forum?id=5xSRg3eYZz)
+1. Xudong, Gong, et al. "**_Improving the Continuity of Goal-Achievement Ability via Policy Self-Regularization for Goal-Conditioned Reinforcement Learning_**." Forty-second International Conference on Machine Learning. **ICML, 2025**. [[Paper]]()
 
-2. Xudong, Gong, et al. "**_Iterative Regularized Policy Optimization with Imperfect Demonstrations_**." Forty-first International Conference on Machine Learning. **ICML, 2024**. [[Paper]](https://openreview.net/pdf?id=Gp5F6qzwGK)
+2. Xudong, Gong, et al. "**_VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems_**." International Conference on Learning Representations. **ICLR, 2025**. [[Paper]](https://openreview.net/forum?id=5xSRg3eYZz)
 
-3. Xudong, Gong, et al. "**_Goal-Conditioned On-Policy Reinforcement Learning_**." Advances in Neural Information Processing Systems. **NeurIPS, 2024**. [[Paper]](https://openreview.net/pdf?id=KP7EUORJYI)
+3. Xudong, Gong, et al. "**_Iterative Regularized Policy Optimization with Imperfect Demonstrations_**." Forty-first International Conference on Machine Learning. **ICML, 2024**. [[Paper]](https://openreview.net/pdf?id=Gp5F6qzwGK)
 
-4. Xudong, Gong, et al. "**_V-Pilot: A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations_**." IEEE International Conference on Robotics and Automation. **ICRA, 2025**.
+4. Xudong, Gong, et al. "**_Goal-Conditioned On-Policy Reinforcement Learning_**." Advances in Neural Information Processing Systems. **NeurIPS, 2024**. [[Paper]](https://openreview.net/pdf?id=KP7EUORJYI)
 
-5. Dawei, Feng, et al. "**_Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies_**." IEEE International Symposium on Parallel and Distributed Processing with Applications. **ISPA, 2024**.
+5. Xudong, Gong, et al. "**_V-Pilot: A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations_**." IEEE International Conference on Robotics and Automation. **ICRA, 2025**.
+
+6. Dawei, Feng, et al. "**_Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies_**." IEEE International Symposium on Parallel and Distributed Processing with Applications. **ISPA, 2024**.
+
+## Architecture
+
+![Architecture](assets/framework.png)
 
 ## Configuration Details
 
