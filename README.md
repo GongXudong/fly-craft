@@ -12,10 +12,10 @@ An efficient goal-conditioned reinforcement learning environment for fixed-wing 
 The policies are trained by "Iterative Regularized Policy Optimization with Imperfect Demonstrations (ICML2024)". [Code](https://github.com/GongXudong/IRPO)
 
 ### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)
-![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)](https://github.com/GongXudong/fly-craft/blob/main/assets/traj_140_-40_-165.gif)
+![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)](assets/traj_140_-40_-165.gif)
 
 ### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)
-![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](https://github.com/GongXudong/fly-craft/blob/main/assets/traj_120_50_170.gif)
+![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](assets/traj_120_50_170.gif)
 
 ## Installation
 
@@ -86,13 +86,13 @@ env = gym.make(
 
 ### Visualization
 
-Please refer to [fly-craft-examples](https://github.com/GongXudong/fly-craft-examples).
+We provide a visualization method based on [Tacview](https://www.tacview.net/). For more details, please refer to [fly-craft-examples](https://github.com/GongXudong/fly-craft-examples).
 
 ## Applications
 
 ### Application examples
 
-1. Training scripts based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation): https://github.com/GongXudong/fly-craft-examples.
+1. We provide a sister repository, [fly-craft-examples](https://github.com/GongXudong/fly-craft-examples), for flycraft, which offers a variety of training scripts based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation).
 
 ### Researches on FlyCraft
 
