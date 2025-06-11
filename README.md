@@ -7,14 +7,18 @@ An efficient goal-conditioned reinforcement learning environment for fixed-wing 
 [![GitHub](https://img.shields.io/github/license/gongxudong/fly-craft.svg)](LICENSE.txt)
 [![Static Badge](https://img.shields.io/badge/Paper-ICLR2025-green?link=https%3A%2F%2Fopenreview.net%2Fforum%3Fid%3D5xSRg3eYZz)](https://openreview.net/forum?id=5xSRg3eYZz)
 
+<!-- TODO: README 目录 -->
+
 ## Demos
 
 The policies are trained by "Iterative Regularized Policy Optimization with Imperfect Demonstrations (ICML2024)". [Code](https://github.com/GongXudong/IRPO)
 
 ### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)
+
 ![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)](assets/traj_140_-40_-165.gif)
 
 ### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)
+
 ![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](assets/traj_120_50_170.gif)
 
 ## Installation
@@ -56,13 +60,13 @@ env.close()
 ### The four methods to initialize environment
 
 ```python
-# 1.use default configurations
+# 1.Initialize environment with default configurations
 env = gym.make('FlyCraft-v0')
 
-# 2.pass configurations through config_file (Path or str)
+# 2.Initialize environment by passing configurations through config_file (Path or str)
 env = gym.make('FlyCraft-v0', config_file=PROJECT_ROOT_DIR / "configs" / "NMR.json")
 
-# 3.pass configurations through custom_config (dict), this method will load default configurations from default path, then update the default config with custom_config
+# 3.Initialize environment by passing configurations through custom_config (dict), this method will load default configurations from default path, then update the default config with custom_config
 env = gym.make(
     'FlyCraft-v0', 
     custom_config={
@@ -72,7 +76,7 @@ env = gym.make(
     }
 )
 
-# 4.pass configurations through both config_file and custom_config. FlyCraft load config from config_file firstly, then update the loaded config with custom_config
+# 4.Initialize environment by passing configurations through both config_file and custom_config. FlyCraft load config from config_file firstly, then update the loaded config with custom_config
 env = gym.make(
     'FlyCraft-v0',
     config_file=PROJECT_ROOT_DIR / "configs" / "NMR.json",
@@ -219,6 +223,86 @@ The configurations about termination conditions, including:
 2. Sampling desired goal $(u, \mu, \chi)$ randomly from $[150, 250] \times [-30， 30] \times [-60, 60]$, [link](https://github.com/GongXudong/fly-craft-examples/blob/main/configs/env/D2D/env_config_for_ppo_medium_b_05.json).
 
 3. Sampling desired goal $(u, \mu, \chi)$ randomly from a pre-defined set (specified by config["goal"]["available_goals_file"]), [link](https://github.com/GongXudong/fly-craft-examples/blob/main/configs/env/IRPO/env_hard_guidance_MR_config_for_ppo_with_dg_from_demo1.json).
+
+## Research Areas supported by FlyCraft
+
+### 1. Goal-Conditioned Reinforcement Learning
+
+FlyCraft is a typical multi-goal problem. Its interface adheres to the design principles of [Gymnasium-Robotics](https://github.com/Farama-Foundation/Gymnasium-Robotics). The observation is implemented using a dictionary type, which includes three keys: "_observation_", "_desired\_goal_", and "_achieved\_goal_". Additionally, it provides a _compute\_reward()_ function. This design makes Flycraft compatible with many open-source Goal-Centric Reinforcement Learning (GCRL) algorithms, facilitating the direct reuse of these algorithms for GCRL research.
+
+### 2. Demonstration-based Reinforcement learning (Imitation Learning, Offline Reinforcement Learning, Offline-to-Online Reinforcement Learning)
+
+We provide scripts for generating demonstration data using PID controllers and for updating demonstrations using trained RL policies. Users can utilize these scripts to generate their own demonstrations. Additionally, we have open-sourced eight datasets of varying quality and quantity, as listed below:
+
+|Demonstration|Trajectory Number|Average Trajectory Length|Transition Number|Link|Collect Method|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|$D_E^0$|10184|282.01±149.98|2872051|[link](https://www.openml.org/d/46000)|from PID|
+|$\overline{D_E^0}$|10264|281.83±149.48|2892731|[link](https://www.openml.org/d/46011)|Augment $D_E^0$|
+|$D_E^1$|24924|124.64±53.07|3106516|[link](https://www.openml.org/d/46012)|optimized $\overline{D_E^0}$ with RL trained policies|
+|$\overline{D_E^1}$|27021|119.64±47.55|3232896|[link](https://www.openml.org/d/46013)|Augment $D_E^1$|
+|$D_E^2$|33114|117.65±46.24|3895791|[link](https://www.openml.org/d/46014)|optimized $\overline{D_E^1}$ with RL trained policies|
+|$\overline{D_E^2}$|34952|115.76±45.65|4045887|[link](https://www.openml.org/d/46015)|Augment $D_E^2$|
+|$D_E^3$|38654|116.59±46.81|4506827|[link](https://www.openml.org/d/46016)|optimized $\overline{D_E^2}$ with RL trained policies|
+|$\overline{D_E^3}$|39835|116.56±47.62|4643048|[link](https://www.openml.org/d/46017)|Augment $D_E^3$|
+
+For the specific details on how the datasets were generated, please refer to our ICLR 2025 paper: [VVCGym](https://openreview.net/pdf?id=5xSRg3eYZz).
+
+### 3. Exploration
+
+FlyCraft represents a typical exploration challenge problem, primarily due to the following complexities:
+
+**Spatial Exploration Complexity (Multi-Goal)**: For non-recurrent policies, the policy search space becomes the Cartesian product of the state space, action space, and desired goal space. This significantly increases the challenge of finding effective policies.
+
+**Temporal Exploration Complexity (Long-Horizon)**: Demonstrations typically exceed an average length of 100 steps, and some challenging tasks may require over 300 steps to complete successfully.
+
+Furthermore, directly applying common RL algorithms like PPO or SAC on FlyCraft, even with dense rewards, yields policies with virtually no beneficial effect. Detailed experimental results are available in our ICLR 2025 paper: [VVCGym](https://openreview.net/pdf?id=5xSRg3eYZz).
+
+### 4. Curriculum Learning
+
+Since common RL algorithms struggle to learn from scratch on FlyCraft, it serves as an suitable testbed for researching Curriculum Learning.
+
+We recommend adjusting task difficulty through two primary methods:
+
+(1) **Adjusting the Desired Goal Space**
+
+A smaller desired goal space, closer to the initial state, makes the task easier. The aircraft's initial velocity is defined by env_config["task"]["v0"]. The initial values for the flight path elevator angle and flight path azimuth angle are both 0. The desired goal space is defined by the following configuration:
+
+* Minimum desired true airspeed: env_config["goal"]["v_min"]
+* Maximum desired true airspeed: env_config["goal"]["v_max"]
+* Minimum desired flight path elevator angle: env_config["goal"]["mu_min"]
+* Maximum desired flight path elevator angle: env_config["goal"]["mu_max"]
+* Minimum desired flight path azimuth angle: env_config["goal"]["chi_min"]
+* Maximum desired flight path azimuth angle: env_config["goal"]["chi_max"]
+
+Additionally, you can define your own desired goal sampling strategy by referring to _tasks.goal_samplers.goal_sampler_for_velocity_vector_control.py_.
+
+(2) **Adjusting the Action Space**
+
+Different action spaces can be employed by setting env_config["task"]["control_mode"]:
+
+* **end_to_end_mode**: The action space consists of final control commands: the deflections of the aileron actuator, elevator actuator, rudder actuator, and power level actuator. This mode exhibits significant oscillation in actions during training. Combined with the long-horizon nature of the Velocity Vector Control task, training suffers greatly from the temporal complexity of exploration.
+* **guidance_law_mode**: The action space consists of intermediate control commands: roll rate command, overload command, and the position of the power level actuator. These three commands are then converted by a PD controller-based control law model into the deflections of the aileron actuator, elevator actuator, rudder actuator, and power level actuator. The PD controller-based control law model acts to smooth the actions, serving a purpose similar to the temporal abstraction provided by frame-skipping, thereby alleviating the temporal complexity of exploration.
+
+A related Curriculum Learning study can be found in the NeurIPS 2024 paper: [GCPO](https://openreview.net/pdf?id=KP7EUORJYI)。
+
+### 5. Hierarchical Reinforcement Learning
+
+The long-horizon nature of fixed-wing UAV tasks makes FlyCraft a suitable testbed for Hierarchical RL research. The task horizon can be adjusted by setting the simulation frequency env_config["task"]["step_frequence"]. We recommend setting the simulation frequency within the range of [10, 100], where a higher value corresponds to a longer task horizon.
+
+For researchers wishing to avoid the long-horizon challenge, we suggest: (1) setting env_config["task"]["step_frequence"] to 10; (2) employing FrameSkip techniques.
+
+### 6. Continual Learning
+
+You can refer to the methods for modifying task difficulty described in the Curriculum Learning section to create different MDPs, thereby facilitating research in Continual Learning.
+
+### 7. Applications of Fixed-Wing UAVs
+
+FlyCraft is fundamentally a simulation engine for fixed-wing UAVs. It allows researchers to study various fixed-wing UAV control problems by defining specific tasks. Currently, we have implemented:
+
+**Velocity Vector Control**: This involves manipulating the UAV's velocity vector to match a desired velocity vector.
+**Attitude Control**: This involves manipulating the UAV's attitude to match a desired attitude.
+
+Potential future tasks include Basic Flight Maneuvers (BFMs) such as Level Turn, Slow Roll, and Knife Edge, among others.
 
 ## Citation
 
