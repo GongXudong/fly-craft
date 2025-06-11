@@ -3,7 +3,7 @@ from typing import Tuple
 from collections import namedtuple
 import logging
 import numpy as np
-
+import math
 
 class TerminationBase(ABC):
 
@@ -63,7 +63,11 @@ class TerminationBase(ABC):
         Returns:
             _type_: _description_
         """
-        return - (1 -  np.power(self.rl_gamma, self.max_episode_steps - steps_cnt)) / (1 - self.rl_gamma)
+        if math.isclose(self.rl_gamma, 1.0):
+            penalty = - (self.max_episode_steps - steps_cnt)
+        else:
+            penalty = - (1 -  np.power(self.rl_gamma, self.max_episode_steps - steps_cnt)) / (1 - self.rl_gamma)
+        return penalty
     
     def get_termination_penalty(self, terminated: bool=False, steps_cnt: int=1):
         """计算仿真结束对应的惩罚值。

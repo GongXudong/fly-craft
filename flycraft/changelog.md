@@ -1,6 +1,10 @@
 # Change logs
 
-current version: 0.1.6
+current version: 0.1.7
+
+## 0.1.7
+
+Change _get_penalty_base_on_steps_left()_ in termination_base.py, now it can calculated penalty with rl_gamma=1.0.
 
 ## 0.1.6
 
