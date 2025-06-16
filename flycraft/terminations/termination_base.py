@@ -5,6 +5,7 @@ import logging
 import numpy as np
 import math
 
+
 class TerminationBase(ABC):
 
     def __init__(self, 

@@ -1,8 +1,14 @@
+import sys
+from pathlib import Path
 from typing import Any, Dict, List, Union
 import numpy as np
 from collections import namedtuple
 import logging
 from gymnasium.utils import seeding
+
+PROJECT_ROOT_DIR = Path(__file__).parent.parent
+if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
+    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from planes.f16_plane import F16Plane
 from tasks.task_base import Task
@@ -16,12 +22,14 @@ from rewards.sparse_reward import SparseReward
 from terminations.termination_base import TerminationBase
 from terminations.reach_target_termination2 import ReachTargetTermination2
 from terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
+from terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
 from terminations.crash_termination import CrashTermination
 from terminations.extreme_state_termination import ExtremeStateTermination
 from terminations.timeout_termination import TimeoutTermination
 from terminations.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
 from terminations.continuousely_roll_termination import ContinuouselyRollTermination
 from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
+
 
 class VelocityVectorControlTask(Task):
 
@@ -196,6 +204,16 @@ class VelocityVectorControlTask(Task):
                             env_config=self.config,
                         )
                     )
+                elif tmnt == "RT_V_MU_CHI_SINGLE_STEP":
+                    self.termination_funcs.append(
+                        ReachTargetTerminationVMuChiSingleStep(
+                            v_threshold=tmp_cfg["v_threshold"],
+                            mu_threshold=tmp_cfg["mu_threshold"],
+                            chi_threshold=tmp_cfg["chi_threshold"],
+                            termination_reward=tmp_cfg["termination_reward"],
+                            env_config=self.config,
+                        )
+                    )
                 elif tmnt == "C":
                     self.termination_funcs.append(
                         CrashTermination(
@@ -290,7 +308,7 @@ class VelocityVectorControlTask(Task):
         
         for r_func in self.reward_funcs:
             r_func.reset()
-    
+
     def is_success(
         self, 
         achieved_goal: np.ndarray, 
@@ -311,12 +329,12 @@ class VelocityVectorControlTask(Task):
         # pick out the reach target termination
         reach_target_termination_func = None
         for t in self.termination_funcs:
-            if isinstance(t, ReachTargetTerminationSingleStep):
+            if isinstance(t, ReachTargetTerminationSingleStep) or isinstance(t, ReachTargetTerminationVMuChiSingleStep):
                 reach_target_termination_func = t
                 break
         
         if reach_target_termination_func == None:
-            raise ValueError("VelocityVectorControlTask: when using off-policy algorithms, must use the termination condition: ReachTargetTerminationSingleStep!!!")
+            raise ValueError("VelocityVectorControlTask: when using off-policy algorithms, must use the termination condition: ReachTargetTerminationSingleStep or ReachTargetTerminationVMuChiSingleStep!!!")
 
         # make tmp_achieved_goal and tmp_desired_goal be of shape (batch, goal_dim)
         if len(achieved_goal.shape) == 1:
@@ -391,7 +409,14 @@ class VelocityVectorControlTask(Task):
             return reward_arr[0]
         else:
             return np.array(reward_arr, dtype=np.float32)
-        
+
+    def get_reach_target_terminations(self):
+        return [
+            ReachTargetTermination2,
+            ReachTargetTerminationSingleStep,
+            ReachTargetTerminationVMuChiSingleStep,
+        ]
+
     @staticmethod
     def get_state_vars():
         """学习器使用的观测
@@ -400,12 +425,12 @@ class VelocityVectorControlTask(Task):
             _type_: _description_
         """
         return namedtuple("state_vars", ["phi", "theta", "psi", "v", "mu", "chi", "p", "h"])
-    
+
     @staticmethod
     def get_goal_vars():
 
         return namedtuple("goal_vars", ["v", "mu", "chi"])
-    
+
     @staticmethod
     def convert_dict_to_state_vars(state_dict:dict) -> namedtuple:
         """将仿真器返回的字典类型观测转换为环境定义的观测(VelocityVectorControlTask.get_state_vars()定义的namedtuple)
@@ -448,9 +473,8 @@ class VelocityVectorControlTask(Task):
     def get_goal_lower_bounds():
         goal_vars_type = VelocityVectorControlTask.get_goal_vars()
         return goal_vars_type(v=0., mu=-90., chi=-180.)
-    
+
     @staticmethod
     def get_goal_higher_bounds():
         goal_vars_type = VelocityVectorControlTask.get_goal_vars()
         return goal_vars_type(v=1000., mu=90., chi=180.)
-    

@@ -10,6 +10,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.termination_base import TerminationBase
 
+
 class ReachTargetTermination(TerminationBase):
 
     def __init__(self,

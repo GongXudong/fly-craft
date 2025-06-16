@@ -12,6 +12,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 from utils.attitude_angle_calc_utils import RollDirection, get_roll_direction, get_roll_deg
 from terminations.termination_base import TerminationBase
 
+
 class ContinuouselyRollTermination(TerminationBase):
     """连续滚转：连续滚转2圈
     """

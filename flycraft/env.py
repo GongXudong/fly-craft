@@ -19,11 +19,12 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from planes.f16_plane import F16Plane
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
-from utils.dict_utils import update_nested_dict
 from terminations.reach_target_termination import ReachTargetTermination
 from terminations.reach_target_termination2 import ReachTargetTermination2
 from terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
+from terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
+from utils.dict_utils import update_nested_dict
+from utils.load_config import load_config
 
 
 class FlyCraftEnv(gym.Env):
@@ -44,7 +45,7 @@ class FlyCraftEnv(gym.Env):
                 achieved_goal = spaces.Box(low=np.array(goal_mins, dtype=np.float32), high=np.array(goal_maxs, dtype=np.float32)),
             )
         )
-        
+
         print(f"load config from: {config_file}")
 
         self.env_config: dict = load_config(config_file)
@@ -56,17 +57,17 @@ class FlyCraftEnv(gym.Env):
             np_random=self.np_random,
             env_config=self.env_config
         )
-        
+
         action_mins = F16Plane.get_action_lower_bounds(self.plane.control_mode)
         action_maxs = F16Plane.get_action_higher_bounds(self.plane.control_mode)
         self.action_space = spaces.Box(low=np.array(action_mins, dtype=np.float32), high=np.array(action_maxs, dtype=np.float32))  # (p, nz, pla) if control_mode == "guidance_law_mode" else (ail, ele, rud, pla)
-        
+
         # log data
         self.step_cnt = 0
         self.plane_state_dict_list: List[Dict] = []
         self.plane_state_namedtuple_list: List[namedtuple] = []
         self.action_list = []
-        
+
         # use for debug
         self.debug_mode: bool = self.env_config.get("debug_mode")
         self.flag_str: str = self.env_config.get("flag_str")
@@ -137,7 +138,7 @@ class FlyCraftEnv(gym.Env):
         self.plane_state_dict_list.append(deepcopy(plane_state_dict))
         plane_state_namedtuple = VelocityVectorControlTask.convert_dict_to_state_vars(plane_state_dict)
         self.plane_state_namedtuple_list.append(plane_state_namedtuple)
-        
+
         # check obs for NaN!!!!!!!!!
         if np.any(np.isnan(plane_state_namedtuple)):
             tmp = []
@@ -145,7 +146,7 @@ class FlyCraftEnv(gym.Env):
                 if self.debug_mode:
                     print(item_obs, item_act)
                 tmp.append([*item_obs, *item_act])
-            
+
             if self.plane.control_mode_guidance_law:
                 tmp_pd = pd.DataFrame(data=tmp, columns=['s_phi', 's_theta', 's_psi', 's_v', 's_mu', 's_chi', 's_p', 's_h', 'target_v', 'target_mu', 'target_chi','a_p', 'a_nz', 'a_pla'])
             else:
@@ -176,12 +177,14 @@ class FlyCraftEnv(gym.Env):
             )
             if terminated:
                 info["termination"] = str(t_func)
-                
-                if isinstance(t_func, ReachTargetTermination) or isinstance(t_func, ReachTargetTermination2) or isinstance(t_func, ReachTargetTerminationSingleStep):
+
+                # if isinstance(t_func, ReachTargetTermination) or isinstance(t_func, ReachTargetTermination2) or isinstance(t_func, ReachTargetTerminationSingleStep) or isinstance(t_func, ReachTargetTerminationVMuChiSingleStep):
+                if self.task.is_reach_target_termination(t_func):
                     info['is_success'] = True
 
                 if self.debug_mode:
-                    if isinstance(t_func, ReachTargetTermination) or isinstance(t_func, ReachTargetTermination2) or isinstance(t_func, ReachTargetTerminationSingleStep):
+                    # if isinstance(t_func, ReachTargetTermination) or isinstance(t_func, ReachTargetTermination2) or isinstance(t_func, ReachTargetTerminationSingleStep) or isinstance(t_func, ReachTargetTerminationVMuChiSingleStep):
+                    if self.task.is_reach_target_termination(t_func):
                         # reach target, print with green
                         print(f"print, {self.flag_str}, \033[32m{str(t_func)}。\033[0m steps: {self.step_cnt}。target: ({desired_goal[0]:.2f}, {desired_goal[1]:.2f}, {desired_goal[2]:.2f})。achieved target: ({plane_state_dict['v']:.2f}, {plane_state_dict['mu']:.2f}, {plane_state_dict['chi']:.2f})。expert steps: {self.task.goal_sampler.goal_expert_length}。")
                     else:
@@ -192,7 +195,7 @@ class FlyCraftEnv(gym.Env):
                     info["rewards"] = {}
                 info["rewards"][str(t_func)] = reward
                 break
-        
+
         # compute reward
         for r_func in self.task.reward_funcs:
             tmp_reward = r_func.get_reward(
@@ -207,7 +210,7 @@ class FlyCraftEnv(gym.Env):
                 info["rewards"] = {}
             info["rewards"][str(r_func)] = tmp_reward
             reward += tmp_reward / len(self.task.reward_funcs)
-        
+
         if self.plane.control_mode_guidance_law:
             info["action"] = {
                 "p": action[0],

@@ -9,6 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.termination_base import TerminationBase
 
+
 class TimeoutTermination(TerminationBase):
     """超时：40秒内未达到目标速度矢量
     """

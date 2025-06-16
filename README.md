@@ -236,14 +236,14 @@ We provide scripts for generating demonstration data using PID controllers and f
 
 |Demonstration|Trajectory Number|Average Trajectory Length|Transition Number|Link|Collect Method|
 |:-:|:-:|:-:|:-:|:-:|:-:|
-|$D_E^0$|10184|282.01±149.98|2872051|[link](https://www.openml.org/d/46000)|from PID|
-|$\overline{D_E^0}$|10264|281.83±149.48|2892731|[link](https://www.openml.org/d/46011)|Augment $D_E^0$|
-|$D_E^1$|24924|124.64±53.07|3106516|[link](https://www.openml.org/d/46012)|optimized $\overline{D_E^0}$ with RL trained policies|
-|$\overline{D_E^1}$|27021|119.64±47.55|3232896|[link](https://www.openml.org/d/46013)|Augment $D_E^1$|
-|$D_E^2$|33114|117.65±46.24|3895791|[link](https://www.openml.org/d/46014)|optimized $\overline{D_E^1}$ with RL trained policies|
-|$\overline{D_E^2}$|34952|115.76±45.65|4045887|[link](https://www.openml.org/d/46015)|Augment $D_E^2$|
-|$D_E^3$|38654|116.59±46.81|4506827|[link](https://www.openml.org/d/46016)|optimized $\overline{D_E^2}$ with RL trained policies|
-|$\overline{D_E^3}$|39835|116.56±47.62|4643048|[link](https://www.openml.org/d/46017)|Augment $D_E^3$|
+|$D_E^0$|10,184|282.01±149.98|2,872,051|[link](https://www.openml.org/d/46000)|from PID|
+|$\overline{D_E^0}$|10,264|281.83±149.48|2,892,731|[link](https://www.openml.org/d/46011)|Augment $D_E^0$|
+|$D_E^1$|24,924|124.64±53.07|3,106,516|[link](https://www.openml.org/d/46012)|optimized $\overline{D_E^0}$ with RL trained policies|
+|$\overline{D_E^1}$|27,021|119.64±47.55|3,232,896|[link](https://www.openml.org/d/46013)|Augment $D_E^1$|
+|$D_E^2$|33,114|117.65±46.24|3,895,791|[link](https://www.openml.org/d/46014)|optimized $\overline{D_E^1}$ with RL trained policies|
+|$\overline{D_E^2}$|34,952|115.76±45.65|4,045,887|[link](https://www.openml.org/d/46015)|Augment $D_E^2$|
+|$D_E^3$|38,654|116.59±46.81|4,506,827|[link](https://www.openml.org/d/46016)|optimized $\overline{D_E^2}$ with RL trained policies|
+|$\overline{D_E^3}$|39,835|116.56±47.62|4,643,048|[link](https://www.openml.org/d/46017)|Augment $D_E^3$|
 
 For the specific details on how the datasets were generated, please refer to our ICLR 2025 paper: [VVCGym](https://openreview.net/pdf?id=5xSRg3eYZz).
 
@@ -274,7 +274,7 @@ A smaller desired goal space, closer to the initial state, makes the task easier
 * Minimum desired flight path azimuth angle: env_config["goal"]["chi_min"]
 * Maximum desired flight path azimuth angle: env_config["goal"]["chi_max"]
 
-Additionally, you can define your own desired goal sampling strategy by referring to _tasks.goal_samplers.goal_sampler_for_velocity_vector_control.py_.
+Additionally, users can define their own desired goal sampling strategy by referring to _tasks.goal_samplers.goal_sampler_for_velocity_vector_control.py_.
 
 (2) **Adjusting the Action Space**
 
@@ -293,7 +293,7 @@ For researchers wishing to avoid the long-horizon challenge, we suggest: (1) set
 
 ### 6. Continual Learning
 
-You can refer to the methods for modifying task difficulty described in the Curriculum Learning section to create different MDPs, thereby facilitating research in Continual Learning.
+Users can refer to the methods for modifying task difficulty described in the Curriculum Learning section to create different MDPs, thereby facilitating research in Continual Learning.
 
 ### 7. Applications of Fixed-Wing UAVs
 

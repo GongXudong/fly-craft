@@ -2,20 +2,22 @@ import sys
 from pathlib import Path
 from abc import ABC, abstractmethod
 import numpy as np
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 PROJECT_ROOT_DIR = Path(__file__).parent.parent
 if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from planes.f16_plane import F16Plane
+from terminations.termination_base import TerminationBase
+
 
 class Task(ABC):
 
     def __init__(self, plane: F16Plane) -> None:
         self.plane: F16Plane = plane
         self.goal: np.ndarray = None
-    
+
     @abstractmethod
     def reset(self) -> None:
         """Reset the task: sample a new goal."""
@@ -34,7 +36,18 @@ class Task(ABC):
             raise RuntimeError("No goal yet, call reset() first")
         else:
             return self.goal.copy()
-    
+
+    @abstractmethod
+    def get_reach_target_terminations(self) -> List[TerminationBase]:
+        """Return the list of reach target terminations associated to the task."""
+
+    def is_reach_target_termination(self, tmnt_obj: TerminationBase) -> bool:
+        """Judge whether tmnt_obj belongs to a reach target termination.
+        """
+        return any(
+            [isinstance(tmnt_obj, rt_tmnt) for rt_tmnt in self.get_reach_target_terminations()]
+        )
+
     @abstractmethod
     def is_success(self, achieved_goal: np.ndarray, desired_goal: np.ndarray, info: Dict[str, Any]={}) -> np.ndarray:
         """Returns whether the achieved goal match the desired goal."""

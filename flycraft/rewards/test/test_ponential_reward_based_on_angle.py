@@ -9,7 +9,6 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from rewards.ponential_reward_based_on_angle import PonentialRewardBasedOnAngle
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
 from utils.geometry_utils import angle_of_2_3d_vectors
 
 class PonentialRewardBasedOnAngleTest(unittest.TestCase):

@@ -4,7 +4,10 @@ current version: 0.1.7
 
 ## 0.1.7
 
-Change _get_penalty_base_on_steps_left()_ in termination_base.py, now it can calculated penalty with rl_gamma=1.0.
+1. Change _get_penalty_base_on_steps_left()_ in termination_base.py, now it can calculated penalty with rl_gamma=1.0.
+2. Add two interfaces to the **task** module, _get_reach_target_terminations()_ and _is_reach_target_termination(termination_function_obj)_.
+3. Remove redundant imports from python scritps.
+4. Add a new section, **Research Areas supported by FlyCraft**, to README.md.
 
 ## 0.1.6
 

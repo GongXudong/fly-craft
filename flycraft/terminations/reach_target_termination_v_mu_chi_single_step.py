@@ -9,11 +9,10 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from terminations.termination_base import TerminationBase
-from utils.geometry_utils import angle_of_2_velocity
 
 
-class ReachTargetTerminationSingleStep(TerminationBase):
-    """根据error of true airspeed和error of angle of velocity vector来判断是否到达目标点
+class ReachTargetTerminationVMuChiSingleStep(TerminationBase):
+    """根据error of true airspeed, error of mu, error of chi来判断是否到达目标点
 
     Args:
         TerminationBase (_type_): _description_
@@ -21,7 +20,8 @@ class ReachTargetTerminationSingleStep(TerminationBase):
 
     def __init__(self,
         v_threshold: float=10., 
-        angle_threshold: float=1.,
+        mu_threshold: float=1.,
+        chi_threshold: float=1.,
         termination_reward: float=1.,
         env_config: dict=None,
         my_logger: logging.Logger=None
@@ -34,7 +34,8 @@ class ReachTargetTerminationSingleStep(TerminationBase):
         )
         
         self.v_threshold = v_threshold
-        self.angle_threshold = angle_threshold
+        self.mu_threshold = mu_threshold
+        self.chi_threshold = chi_threshold
 
     def _get_termination(
         self, 
@@ -42,13 +43,15 @@ class ReachTargetTerminationSingleStep(TerminationBase):
         goal_v: float, goal_mu: float, goal_chi: float
     ) -> Tuple[bool, bool]:
         
-        v_flag, angle_flag = False, False
+        v_flag, mu_flag, chi_flag = False, False, False
         if abs(goal_v - v) < self.v_threshold:
             v_flag = True
-        if angle_of_2_velocity(v, mu, chi, goal_v, goal_mu, goal_chi) < self.angle_threshold:
-            angle_flag = True
+        if abs(goal_mu - mu) < self.mu_threshold:
+            mu_flag = True
+        if abs(goal_chi - chi) < self.chi_threshold:
+            chi_flag = True
         
-        if v_flag and angle_flag:
+        if v_flag and mu_flag and chi_flag:
             return True, False
         else:
             return False, False

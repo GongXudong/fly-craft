@@ -1,8 +1,14 @@
+import sys
+from pathlib import Path
 from typing import Any, Dict, List, Union
 import numpy as np
 from collections import namedtuple
 import logging
 from gymnasium.utils import seeding
+
+PROJECT_ROOT_DIR = Path(__file__).parent.parent
+if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
+    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from planes.f16_plane import F16Plane
 from tasks.task_base import Task
@@ -21,6 +27,7 @@ from terminations.timeout_termination import TimeoutTermination
 from terminations.for_BFM_level_turn.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
 from terminations.continuousely_roll_termination import ContinuouselyRollTermination
 from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
+
 
 class BFMLevelTurnTask(Task):
 
@@ -382,7 +389,13 @@ class BFMLevelTurnTask(Task):
             return reward_arr[0]
         else:
             return np.array(reward_arr, dtype=np.float32)
-        
+
+    def get_reach_target_terminations(self):
+        return [
+            ReachTargetTermination,
+            ReachTargetTerminationSingleStep,
+        ]
+
     @staticmethod
     def get_state_vars():
         """学习器使用的观测
