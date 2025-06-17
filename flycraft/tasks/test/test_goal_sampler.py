@@ -10,8 +10,8 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from tasks.goal_samplers.goal_sampler_for_velocity_vector_control import GoalSampler
-from utils.load_config import load_config
-from utils.dict_utils import update_nested_dict
+from utils_common.load_config import load_config
+from utils_common.dict_utils import update_nested_dict
 
 
 class GoalSamplerTest(unittest.TestCase):

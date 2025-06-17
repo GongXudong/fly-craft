@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.timeout_termination import TimeoutTermination
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class TimeoutTerminationTest(unittest.TestCase):
@@ -23,7 +23,7 @@ class TimeoutTerminationTest(unittest.TestCase):
             env_config=env_config
         )
         self.state_var_type = VelocityVectorControlTask.get_state_vars()
-    
+
     def test_1(self):
         tested_step_cnt = 410
         state = self.state_var_type(phi=0., theta=0., psi=0., v=200., mu=20., chi=30., p=0., h=0.)

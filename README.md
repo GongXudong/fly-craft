@@ -177,11 +177,16 @@ The configurations about termination conditions, including:
   * _v_threshold_ Float (m/s): the error band used to determine whether true air speed meets the requirements;
   * _angle_threshold_ Float (deg): the error band used to determine whether the direction of velocity vector meets the requirements;
   * _termination_reward_ Float: the reward the agent receives when triggering RT.
-* **RT_SINGLE_STEP** Dict: The configurations of the Reach Target Termination (used by Markovian reward)
+* **RT_SINGLE_STEP** Dict: The configurations of the Reach Target Termination (used by Markovian reward, judge achievement by the error of true airspeed and the error of angle of velocity)
   * _use_ Boolean: whether use this termination;
   * _v_threshold_ Float (m/s): the error band used to determine whether true air speed meets the requirements;
   * _angle_threshold_ Float (deg): the error band used to determine whether the direction of velocity vector meets the requirements;
   * _termination_reward_ Float: the reward the agent receives when triggering RT_SINGLE_STEP.
+* **RT_V_MU_CHI_SINGLE_STEP** Dict: The configurations of the Reach Target Termination (used by Markovian reward, judge achievement by the error of true airspeed, the error of flight path elevator angle, and the error of flight path azimuth angle)
+  * _use_ Boolean: whether use this termination;
+  * _v_threshold_ Float (m/s): the error band used to determine whether true air speed meets the requirements;
+  * _angle_threshold_ Float (deg): the error band used to determine whether the direction of velocity vector meets the requirements;
+  * _termination_reward_ Float: the reward the agent receives when triggering RT_V_MU_CHI_SINGLE_STEP.
 * **C** Dict: The configurations of Crash Termination
   * _use_ Boolean: whether use this termination;
   * _h0_ Float (m): the altitude threshold below which this termination triggers;

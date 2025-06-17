@@ -23,8 +23,8 @@ from terminations.reach_target_termination import ReachTargetTermination
 from terminations.reach_target_termination2 import ReachTargetTermination2
 from terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
 from terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
-from utils.dict_utils import update_nested_dict
-from utils.load_config import load_config
+from utils_common.dict_utils import update_nested_dict
+from utils_common.load_config import load_config
 
 
 class FlyCraftEnv(gym.Env):

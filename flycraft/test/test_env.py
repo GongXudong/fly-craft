@@ -9,7 +9,7 @@ PROJECT_ROOT_DIR = Path(__file__).parent.parent
 if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class FlyCraftEnvRandomSampleTest(unittest.TestCase):

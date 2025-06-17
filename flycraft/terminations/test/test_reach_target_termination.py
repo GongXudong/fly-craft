@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.reach_target_termination import ReachTargetTermination
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class ReachTargetTerminationTest(unittest.TestCase):

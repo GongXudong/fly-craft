@@ -8,7 +8,7 @@ PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
 if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
-from utils.my_log import get_logger
+from utils_common.my_log import get_logger
 
 
 class Test(unittest.TestCase):

@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class ReachTargetTerminationSingleStepTest(unittest.TestCase):

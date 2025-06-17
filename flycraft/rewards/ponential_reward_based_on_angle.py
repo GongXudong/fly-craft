@@ -11,7 +11,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from rewards.reward_base import RewardBase
-from utils.geometry_utils import angle_of_2_3d_vectors
+from utils_common.geometry_utils import angle_of_2_3d_vectors
 
 
 class PonentialRewardBasedOnAngle(RewardBase, ABC):

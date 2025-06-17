@@ -11,8 +11,8 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 from planes.f16_plane import F16Plane
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
 from tasks.goal_samplers.goal_sampler_for_velocity_vector_control import GoalSampler
-from utils.load_config import load_config
-from utils.dict_utils import update_nested_dict
+from utils_common.load_config import load_config
+from utils_common.dict_utils import update_nested_dict
 
 
 class AttitudeControlTaskTest(unittest.TestCase):

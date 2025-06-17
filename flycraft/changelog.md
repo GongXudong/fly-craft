@@ -2,6 +2,10 @@
 
 current version: 0.1.7
 
+## 0.1.8
+
+Rename the package 'utils' to 'utils_common'.
+
 ## 0.1.7
 
 1. Change _get_penalty_base_on_steps_left()_ in termination_base.py, now it can calculated penalty with rl_gamma=1.0.

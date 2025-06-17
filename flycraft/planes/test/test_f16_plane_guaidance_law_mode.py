@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from planes.f16_plane import F16Plane
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class GoalSamplerTest(unittest.TestCase):

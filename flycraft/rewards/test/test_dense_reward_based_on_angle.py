@@ -11,7 +11,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from rewards.dense_reward_based_on_angle import DenseRewardBasedOnAngle
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.geometry_utils import angle_of_2_3d_vectors, v_mu_chi_2_enh
+from utils_common.geometry_utils import angle_of_2_3d_vectors, v_mu_chi_2_enh
 
 
 class DenseRewardBasedOnAngleTest(unittest.TestCase):

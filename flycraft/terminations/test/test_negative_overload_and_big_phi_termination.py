@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class NegativeOverloadAndBigPhiTerminationTest(unittest.TestCase):

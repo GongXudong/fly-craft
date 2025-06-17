@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class ReachTargetTerminationSingleStepTest(unittest.TestCase):
@@ -25,7 +25,7 @@ class ReachTargetTerminationSingleStepTest(unittest.TestCase):
             env_config=env_config
         )
         self.state_var_type = VelocityVectorControlTask.get_state_vars()
-    
+
     def test_1(self):
         """精度达到要求，返回True
         """

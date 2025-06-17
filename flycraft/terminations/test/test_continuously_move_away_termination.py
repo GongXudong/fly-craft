@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
@@ -259,7 +259,7 @@ class ContinuouselyMoveAwayTerminationTest(unittest.TestCase):
             )
             if res2[0] or res2[1]:
                 break
-        
+
         self.assertFalse(res2[0])
         self.assertFalse(res2[1])
         self.assertAlmostEqual(res2[2], 0.)

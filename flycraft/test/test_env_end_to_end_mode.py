@@ -8,6 +8,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from env import FlyCraftEnv
 
+
 class FlyCraftEnvTest(unittest.TestCase):
 
     def setUp(self) -> None:

@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.extreme_state_termination import ExtremeStateTermination
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class CrashTerminationTest(unittest.TestCase):
@@ -106,7 +106,7 @@ class CrashTerminationTest(unittest.TestCase):
         self.assertTrue(res2[0])
         self.assertTrue(res2[1])
         self.assertAlmostEqual(res2[2], -1.)
-    
+
     def test_5(self):
         tested_p = 510.
         state = self.state_var_type(phi=0., theta=0., psi=0., v=200., mu=20., chi=30., p=200., h=5000.)

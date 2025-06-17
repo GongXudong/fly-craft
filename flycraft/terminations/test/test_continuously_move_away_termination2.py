@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
 
 from terminations.continuousely_move_away_termination2 import ContinuouselyMoveAwayTermination2
 from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils.load_config import load_config
+from utils_common.load_config import load_config
 
 
 class ContinuouselyMoveAwayTermination2Test(unittest.TestCase):
@@ -68,7 +68,7 @@ class ContinuouselyMoveAwayTermination2Test(unittest.TestCase):
             # print(self.continuousely_move_away_termination.mu_continuously_increasing_num)
             if res2[0] or res2[1]:
                 break
-        
+
         self.assertTrue(res2[0])
         self.assertFalse(res2[1])
         self.assertAlmostEqual(res2[2], -1.)

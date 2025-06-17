@@ -9,7 +9,7 @@ if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
     sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 from terminations.termination_base import TerminationBase
-from utils.geometry_utils import angle_of_2_velocity
+from utils_common.geometry_utils import angle_of_2_velocity
 
 
 class ReachTargetTermination2(TerminationBase):
