@@ -1,14 +1,8 @@
 import unittest
 import numpy as np
-from pathlib import Path
-import sys
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from rewards.sparse_reward2 import SparseReward2
-from tasks.velocity_vector_control_task import VelocityVectorControlTask
+from flycraft.rewards.sparse_reward2 import SparseReward2
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
 
 
 class ReachTargetReardTest(unittest.TestCase):

@@ -36,6 +36,8 @@ git clone https://github.com/GongXudong/fly-craft.git
 pip install -e fly-craft
 ```
 
+***NOTE***: Due to the use of dynamic libraries "\*.so"/"\*.dll", FlyCraft can only be used on Linux or Windows. As we have conducted comprehensive testing on Linux systems, we recommend deploying FlyCraft in one of the following environments: (1) a native Linux operating system, (2) a Linux subsystem activated via Windows WSL, or (3) a Linux container initiated through Docker on macOS/Windows.
+
 ## Usage
 
 ### Basic usage

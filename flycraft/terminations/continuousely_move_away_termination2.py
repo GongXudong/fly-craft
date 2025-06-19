@@ -1,16 +1,10 @@
 from typing import Tuple, List
 from collections import namedtuple
 import logging
-from pathlib import Path
-import sys
 import numpy as np
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from terminations.termination_base import TerminationBase
-from utils_common.geometry_utils import angle_of_2_3d_vectors
+from flycraft.terminations.termination_base import TerminationBase
+from flycraft.utils_common.geometry_utils import angle_of_2_3d_vectors
 
 
 class ContinuouselyMoveAwayTermination2(TerminationBase):

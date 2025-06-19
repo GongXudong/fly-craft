@@ -1,15 +1,9 @@
-import sys
-from pathlib import Path
 from abc import ABC, abstractmethod
 import numpy as np
 from typing import Dict, Any, List
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from planes.f16_plane import F16Plane
-from terminations.termination_base import TerminationBase
+from flycraft.planes.f16_plane import F16Plane
+from flycraft.terminations.termination_base import TerminationBase
 
 
 class Task(ABC):

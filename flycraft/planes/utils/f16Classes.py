@@ -1,15 +1,12 @@
 import os
-import sys
 from pathlib import Path
 from math import radians, sin, cos, tan, atan2, asin
 from ctypes import CDLL, c_char_p, c_double, c_void_p, c_int
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
+from flycraft.planes.utils.f16_utils import currentOps, currentArchi, pythonVersion
+from flycraft.planes.utils.f16_utils.util import Mach2TAS
 
-from planes.utils.f16_utils import currentOps, currentArchi, pythonVersion
-from planes.utils.f16_utils.util import Mach2TAS
+PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
 
 
 def checkPlatform():
@@ -26,13 +23,16 @@ def checkPlatform():
     return path, suffix
 
 class Guide(object):
-    def __init__(self, planeType=None):
+    def __init__(self, planeType=None, logging: bool=False):
         self.planeType = planeType
         self.initDll()
-        self.initLog()
+        self.logging = logging
+        if self.logging:
+            self.initLog()
     
     def __del__(self):
-        self.log.close()
+        if self.logging:
+            self.log.close()
         
     def initDll(self):
         path, ends = checkPlatform()
@@ -44,7 +44,11 @@ class Guide(object):
     def initLog(self):
         # self.log = open('logs/guideInOut.csv', 'w')
 
-        log_file = os.path.join(PROJECT_ROOT_DIR, "planes", "utils", "logs", "guideInOut.csv")
+        log_dir = os.path.join(PROJECT_ROOT_DIR, "planes", "utils", "logs")
+        if not Path(log_dir).exists():
+            Path(log_dir).mkdir()
+
+        log_file = os.path.join(log_dir, "guideInOut.csv")
         
         if not Path(log_file).exists():
             Path(log_file).touch()
@@ -75,7 +79,8 @@ class Guide(object):
         self.inputGuide[5] = 0         # Phi_c_LV
         self.inputGuide[6] = 0         # Thr_c_LV
         self.inputGuide[7] = 1         # Mode, 1W, 2LV, 3Best turn
-        self.log.write(str(cmdDict['mu']))
+        if self.logging:
+            self.log.write(str(cmdDict['mu']))
     
     def setPlaneState(self, planeStateDict):
         self.inputGuide[8] = planeStateDict['psi']          #psi_p

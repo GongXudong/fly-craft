@@ -1,15 +1,10 @@
 import unittest
 from pathlib import Path
-import sys
-import numpy as np
 import gymnasium as gym
+
 import flycraft
 
 PROJECT_ROOT_DIR = Path(__file__).parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from utils_common.load_config import load_config
 
 
 class FlyCraftEnvRandomSampleTest(unittest.TestCase):

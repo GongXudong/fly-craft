@@ -5,26 +5,16 @@ import numpy as np
 import pandas as pd
 from collections import namedtuple
 from typing import List
-import logging
 from pathlib import Path
-import sys
 from copy import deepcopy
-import gc
-import time
 from typing import Union, Dict
 
-PROJECT_ROOT_DIR = Path(__file__).parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
+from flycraft.planes.f16_plane import F16Plane
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
+from flycraft.utils_common.dict_utils import update_nested_dict
+from flycraft.utils_common.load_config import load_config
 
-from planes.f16_plane import F16Plane
-from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from terminations.reach_target_termination import ReachTargetTermination
-from terminations.reach_target_termination2 import ReachTargetTermination2
-from terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
-from terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
-from utils_common.dict_utils import update_nested_dict
-from utils_common.load_config import load_config
+PROJECT_ROOT_DIR = Path(__file__).parent
 
 
 class FlyCraftEnv(gym.Env):

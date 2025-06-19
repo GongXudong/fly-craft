@@ -2,8 +2,8 @@ from math import fabs, cos, sin, radians, sqrt, acos, degrees
 import numpy as np
 from enum import Enum
 
-
 ROLL_THRESHOLD = 1e-2
+
 
 class RollDirection(Enum):
     LEFT = 1

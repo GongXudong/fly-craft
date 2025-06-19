@@ -1,14 +1,8 @@
 import unittest
 import numpy as np
-import sys
-from pathlib import Path
-
-PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from utils_common import geometry_utils
 from functools import partial
+
+from flycraft.utils_common import geometry_utils
 
 my_all_close = partial(np.allclose, atol=1.e-8)
 

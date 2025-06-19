@@ -1,14 +1,12 @@
 import unittest
 from pathlib import Path
-import sys
 import numpy as np
 from tqdm import tqdm
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
+from flycraft.env import FlyCraftEnv
 
-from env import FlyCraftEnv
+PROJECT_ROOT_DIR = Path(__file__).parent.parent
+
 
 class FlyCraftEnvRandomSampleTest(unittest.TestCase):
 

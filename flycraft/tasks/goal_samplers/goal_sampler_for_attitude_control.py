@@ -1,11 +1,6 @@
-import sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
-
-PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
 
 
 class GoalSampler(object):

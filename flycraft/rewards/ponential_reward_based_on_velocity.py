@@ -3,14 +3,8 @@ import numpy as np
 from collections import namedtuple
 from typing import Union, Callable
 import logging
-from pathlib import Path
-import sys
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from rewards.reward_base import RewardBase
+from flycraft.rewards.reward_base import RewardBase
 
 
 class PonentialRewardBasedOnVelocity(RewardBase, ABC):

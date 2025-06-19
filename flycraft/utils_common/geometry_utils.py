@@ -1,6 +1,7 @@
 import numpy as np
 from typing import Tuple
 
+
 def angle_of_2_3d_vectors(v1, v2):
     x = np.array(v1)
     y = np.array(v2)

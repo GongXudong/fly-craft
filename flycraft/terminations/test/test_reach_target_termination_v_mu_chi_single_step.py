@@ -1,15 +1,12 @@
 import unittest
 import numpy as np
 from pathlib import Path
-import sys
+
+from flycraft.terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
+from flycraft.utils_common.load_config import load_config
 
 PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
-from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils_common.load_config import load_config
 
 
 class ReachTargetTerminationSingleStepTest(unittest.TestCase):

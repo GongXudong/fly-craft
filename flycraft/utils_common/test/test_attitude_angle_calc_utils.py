@@ -1,14 +1,7 @@
 import unittest
-import numpy as np
-import sys
-from pathlib import Path
 from math import sqrt
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from utils_common.attitude_angle_calc_utils import roll2xy_on_unit_circle, RollDirection, get_roll_direction, get_roll_deg
+from flycraft.utils_common.attitude_angle_calc_utils import roll2xy_on_unit_circle, RollDirection, get_roll_direction, get_roll_deg
 
 
 class AttitudeAngleCalcUtilsTest(unittest.TestCase):

@@ -1,34 +1,28 @@
-import sys
-from pathlib import Path
 from typing import Any, Dict, List, Union
 import numpy as np
 from collections import namedtuple
 import logging
 from gymnasium.utils import seeding
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
+from flycraft.planes.f16_plane import F16Plane
+from flycraft.tasks.task_base import Task
+from flycraft.tasks.goal_samplers.goal_sampler_for_velocity_vector_control import GoalSampler
 
-from planes.f16_plane import F16Plane
-from tasks.task_base import Task
-from tasks.goal_samplers.goal_sampler_for_velocity_vector_control import GoalSampler
+from flycraft.rewards.reward_base import RewardBase
+from flycraft.rewards.dense_reward_based_on_angle_and_velocity import DenseRewardBasedOnAngleAndVelocity
+from flycraft.rewards.dense_reward_based_on_angle import DenseRewardBasedOnAngle
+from flycraft.rewards.sparse_reward import SparseReward
 
-from rewards.reward_base import RewardBase
-from rewards.dense_reward_based_on_angle_and_velocity import DenseRewardBasedOnAngleAndVelocity
-from rewards.dense_reward_based_on_angle import DenseRewardBasedOnAngle
-from rewards.sparse_reward import SparseReward
-
-from terminations.termination_base import TerminationBase
-from terminations.reach_target_termination2 import ReachTargetTermination2
-from terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
-from terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
-from terminations.crash_termination import CrashTermination
-from terminations.extreme_state_termination import ExtremeStateTermination
-from terminations.timeout_termination import TimeoutTermination
-from terminations.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
-from terminations.continuousely_roll_termination import ContinuouselyRollTermination
-from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
+from flycraft.terminations.termination_base import TerminationBase
+from flycraft.terminations.reach_target_termination2 import ReachTargetTermination2
+from flycraft.terminations.reach_target_termination_single_step import ReachTargetTerminationSingleStep
+from flycraft.terminations.reach_target_termination_v_mu_chi_single_step import ReachTargetTerminationVMuChiSingleStep
+from flycraft.terminations.crash_termination import CrashTermination
+from flycraft.terminations.extreme_state_termination import ExtremeStateTermination
+from flycraft.terminations.timeout_termination import TimeoutTermination
+from flycraft.terminations.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
+from flycraft.terminations.continuousely_roll_termination import ContinuouselyRollTermination
+from flycraft.terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
 
 
 class VelocityVectorControlTask(Task):

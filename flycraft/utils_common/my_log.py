@@ -3,6 +3,7 @@ from pathlib import Path
 
 PROJECT_ROOT_DIR = Path(__file__).parent.parent
 
+
 def get_logger(logger_name:str="ucav", log_file_dir: Path=PROJECT_ROOT_DIR / "my_logs" / "my_sys_logs.log"):
     handler_file = logging.FileHandler(log_file_dir)  # stdout to file
     handler_control = logging.StreamHandler()    # stdout to console

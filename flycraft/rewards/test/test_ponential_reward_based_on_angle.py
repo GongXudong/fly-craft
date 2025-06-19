@@ -1,15 +1,9 @@
 import unittest
 import numpy as np
-from pathlib import Path
-import sys
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from rewards.ponential_reward_based_on_angle import PonentialRewardBasedOnAngle
-from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from utils_common.geometry_utils import angle_of_2_3d_vectors
+from flycraft.rewards.ponential_reward_based_on_angle import PonentialRewardBasedOnAngle
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
+from flycraft.utils_common.geometry_utils import angle_of_2_3d_vectors
 
 
 class PonentialRewardBasedOnAngleTest(unittest.TestCase):

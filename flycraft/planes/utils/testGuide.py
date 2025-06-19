@@ -120,7 +120,7 @@ def testFullStep():
         stsDict = f16model.getPlaneState()
 
 if __name__ == '__main__':
-    # testGuide()
-    # testCL()
-    # testPlane()
+    testGuide()
+    testCL()
+    testPlane()
     testFullStep()

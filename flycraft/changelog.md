@@ -1,6 +1,11 @@
 # Change logs
 
-current version: 0.1.7
+current version: 0.1.9
+
+## 0.1.9
+
+1. Modify the import method for packages within the project.
+2. Fixed the path issue in the guidance law model when logging data.
 
 ## 0.1.8
 

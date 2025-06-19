@@ -1,18 +1,14 @@
 import unittest
 import numpy as np
 from pathlib import Path
-import sys
-import math
+
+from flycraft.planes.f16_plane import F16Plane
+from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
+from flycraft.tasks.goal_samplers.goal_sampler_for_velocity_vector_control import GoalSampler
+from flycraft.utils_common.load_config import load_config
+from flycraft.utils_common.dict_utils import update_nested_dict
 
 PROJECT_ROOT_DIR = Path(__file__).parent.parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from planes.f16_plane import F16Plane
-from tasks.velocity_vector_control_task import VelocityVectorControlTask
-from tasks.goal_samplers.goal_sampler_for_velocity_vector_control import GoalSampler
-from utils_common.load_config import load_config
-from utils_common.dict_utils import update_nested_dict
 
 
 class AttitudeControlTaskTest(unittest.TestCase):

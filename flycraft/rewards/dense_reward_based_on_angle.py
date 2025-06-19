@@ -1,16 +1,10 @@
 from typing import Union
 import numpy as np
 from collections import namedtuple
-from pathlib import Path
 import logging
-import sys
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
-
-from rewards.reward_base import RewardBase
-from utils_common.geometry_utils import angle_of_2_3d_vectors
+from flycraft.rewards.reward_base import RewardBase
+from flycraft.utils_common.geometry_utils import angle_of_2_3d_vectors
 
 
 class DenseRewardBasedOnAngle(RewardBase):

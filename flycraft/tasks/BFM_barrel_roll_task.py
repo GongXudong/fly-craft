@@ -1,32 +1,26 @@
-import sys
-from pathlib import Path
 from typing import Any, Dict, List, Union
 import numpy as np
 from collections import namedtuple
 import logging
 from gymnasium.utils import seeding
 
-PROJECT_ROOT_DIR = Path(__file__).parent.parent
-if str(PROJECT_ROOT_DIR.absolute()) not in sys.path:
-    sys.path.append(str(PROJECT_ROOT_DIR.absolute()))
+from flycraft.planes.f16_plane import F16Plane
+from flycraft.tasks.task_base import Task
+from flycraft.tasks.goal_samplers.goal_sampler_for_BFM_level_turn import GoalSampler
 
-from planes.f16_plane import F16Plane
-from tasks.task_base import Task
-from tasks.goal_samplers.goal_sampler_for_BFM_level_turn import GoalSampler
+from flycraft.rewards.reward_base import RewardBase
+from flycraft.rewards.for_BFM_level_turn.dense_reward_based_on_velocity_chi import DenseRewardBasedOnAngleAndVelocity
+from flycraft.rewards.sparse_reward import SparseReward
 
-from rewards.reward_base import RewardBase
-from rewards.for_BFM_level_turn.dense_reward_based_on_velocity_chi import DenseRewardBasedOnAngleAndVelocity
-from rewards.sparse_reward import SparseReward
-
-from terminations.termination_base import TerminationBase
-from terminations.for_BFM_level_turn.reach_target_termination import ReachTargetTermination
-from terminations.for_BFM_level_turn.reach_target_termination_single_step import ReachTargetTerminationSingleStep
-from terminations.crash_termination import CrashTermination
-from terminations.extreme_state_termination import ExtremeStateTermination
-from terminations.timeout_termination import TimeoutTermination
-from terminations.for_BFM_level_turn.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
-from terminations.continuousely_roll_termination import ContinuouselyRollTermination
-from terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
+from flycraft.terminations.termination_base import TerminationBase
+from flycraft.terminations.for_BFM_level_turn.reach_target_termination import ReachTargetTermination
+from flycraft.terminations.for_BFM_level_turn.reach_target_termination_single_step import ReachTargetTerminationSingleStep
+from flycraft.terminations.crash_termination import CrashTermination
+from flycraft.terminations.extreme_state_termination import ExtremeStateTermination
+from flycraft.terminations.timeout_termination import TimeoutTermination
+from flycraft.terminations.for_BFM_level_turn.continuousely_move_away_termination import ContinuouselyMoveAwayTermination
+from flycraft.terminations.continuousely_roll_termination import ContinuouselyRollTermination
+from flycraft.terminations.negative_overload_and_big_phi_termination import NegativeOverloadAndBigPhiTermination
 
 
 class BFMBarrelRollTask(Task):
