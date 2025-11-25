@@ -10,14 +10,14 @@ from copy import deepcopy
 from typing import Union, Dict
 
 from flycraft.planes.f16_plane import F16Plane
-from flycraft.tasks.velocity_vector_control_task import VelocityVectorControlTask
+from flycraft.tasks.BFM_level_turn_task import BFMLevelTurnTask
 from flycraft.utils_common.dict_utils import update_nested_dict
 from flycraft.utils_common.load_config import load_config
 
 PROJECT_ROOT_DIR = Path(__file__).parent
 
 
-class FlyCraftEnv(gym.Env):
+class FlyCraftLevelTurnEnv(gym.Env):
     """Velocity Control Task, controlling aircraft's velocity vector to achieve desired velocity vector $(v, \mu, \chi)$.
     """
 
@@ -27,10 +27,10 @@ class FlyCraftEnv(gym.Env):
         config_file: Union[Path, str]=Path(PROJECT_ROOT_DIR / "configs" / "NMR.json"),
     ) -> None:
         # define spaces
-        state_mins = VelocityVectorControlTask.get_state_lower_bounds()
-        state_maxs = VelocityVectorControlTask.get_state_higher_bounds()
-        goal_mins = VelocityVectorControlTask.get_goal_lower_bounds()
-        goal_maxs = VelocityVectorControlTask.get_goal_higher_bounds()
+        state_mins = BFMLevelTurnTask.get_state_lower_bounds()
+        state_maxs = BFMLevelTurnTask.get_state_higher_bounds()
+        goal_mins = BFMLevelTurnTask.get_goal_lower_bounds()
+        goal_maxs = BFMLevelTurnTask.get_goal_higher_bounds()
         self.observation_space = spaces.Dict(
             dict(
                 observation = spaces.Box(low=np.array(state_mins, dtype=np.float32), high=np.array(state_maxs, dtype=np.float32)),  # phi, theta, psi, v, mu, chi, p, h
@@ -45,7 +45,7 @@ class FlyCraftEnv(gym.Env):
         update_nested_dict(self.env_config, custom_config)
 
         self.plane: F16Plane = F16Plane(env_config=self.env_config)
-        self.task: VelocityVectorControlTask = VelocityVectorControlTask(
+        self.task: BFMLevelTurnTask = BFMLevelTurnTask(
             plane=self.plane,
             env_config=self.env_config,
             np_random=self.np_random,
@@ -73,7 +73,7 @@ class FlyCraftEnv(gym.Env):
 
     def _get_obs(self) -> Dict[str, np.ndarray]:
         return {
-            "observation": np.array(VelocityVectorControlTask.convert_dict_to_state_vars(self.plane_state_dict_list[-1]), dtype=np.float32),
+            "observation": np.array(BFMLevelTurnTask.convert_dict_to_state_vars(self.plane_state_dict_list[-1]), dtype=np.float32),
             "achieved_goal": self.task.get_achieved_goal().astype(np.float32),
             "desired_goal": self.task.get_goal().astype(np.float32),
         }
@@ -98,7 +98,7 @@ class FlyCraftEnv(gym.Env):
 
         self.step_cnt = 0
         self.plane_state_dict_list = [plane_state_dict]
-        self.plane_state_namedtuple_list = [VelocityVectorControlTask.convert_dict_to_state_vars(plane_state_dict)]
+        self.plane_state_namedtuple_list = [BFMLevelTurnTask.convert_dict_to_state_vars(plane_state_dict)]
         self.action_list = []
 
         info = {}
@@ -132,7 +132,7 @@ class FlyCraftEnv(gym.Env):
 
         plane_state_dict = self.plane.step(action)
         self.plane_state_dict_list.append(deepcopy(plane_state_dict))
-        plane_state_namedtuple = VelocityVectorControlTask.convert_dict_to_state_vars(plane_state_dict)
+        plane_state_namedtuple = BFMLevelTurnTask.convert_dict_to_state_vars(plane_state_dict)
         self.plane_state_namedtuple_list.append(plane_state_namedtuple)
 
         # check obs for NaN!!!!!!!!!

@@ -7,40 +7,79 @@ An efficient goal-conditioned reinforcement learning environment for fixed-wing 
 [![GitHub](https://img.shields.io/github/license/gongxudong/fly-craft.svg)](LICENSE.txt)
 [![Static Badge](https://img.shields.io/badge/Paper-ICLR2025-green?link=https%3A%2F%2Fopenreview.net%2Fforum%3Fid%3D5xSRg3eYZz)](https://openreview.net/forum?id=5xSRg3eYZz)
 
-<!-- TODO: README 目录 -->
-
-## Demos
+## <a id="demostrations"></a>Demostrations
 
 The policies are trained by "Iterative Regularized Policy Optimization with Imperfect Demonstrations (ICML2024)". [Code](https://github.com/GongXudong/IRPO)
 
-### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)
+### <a id="descending_turn"></a>Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)
 
 ![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (140, -40, -165)](assets/traj_140_-40_-165.gif)
 
-### Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)
+### <a id="ascending_turn"></a>Target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)
 
 ![target velocity vector (v, $\mu$, $\chi$) from (200, 0, 0) to (120, 50, 170)](assets/traj_120_50_170.gif)
 
-## Installation
+## Table of Contents
 
-### Using PyPI
+- [Demostrations](#demostrations)
+  - [A descending turn](#descending_turn)
+  - [An ascending turn](#ascending_turn)
+- [Installation](#installation)
+  - [From PyPI](#install_from_pypi)
+  - [From source](#install_from_source)
+- [Usage](#usage)
+  - [Basic usage](#usage_basic)
+  - [Four environment initialization methods](#usage_initialize_env)
+  - [Visualization](#usage_visualization)
+- [Applications](#applications)
+  - [Application examples](#application_examples)
+  - [Researches on FlyCraft](#application_papers)
+- [Architecture](#architecture)
+- [Configuration Details](#config)
+  - [Task](#config_task)
+  - [Desired Goal](#config_dg)
+  - [Rewards](#config_reward)
+  - [Terminations](#config_terminations)
+  - [Cases](#config_cases)
+- [Research Areas supported by FlyCraft](#research_area)
+  - [Goal-Conditioned Reinforcement Learning](#research_area_gcrl)
+  - [Demonstration-based Reinforcement learning](#research_area_rlfd)
+  - [Exploration](#research_area_exploration)
+  - [Curriculum Learning](#research_area_curriculum)
+  - [Hierarchical Reinforcement Learning](#research_area_hierarchical)
+  - [Continual Learning](#research_area_continual)
+  - [Applications of Fixed-Wing UAVs](#research_area_applications)
+- [Customize FlyCraft with Your Tasks](#customize_task)
+  - [Define your customized task](#customize_task_def_task)
+  - [Define your customized environment](#customize_task_def_env)
+  - [Register your customized environment](#customize_task_register_env)
+  - [Test/Run your customized environment](#customize_task_run)
+- [Citation](#citation)
+
+## <a id="installation"></a>Installation
+
+### <a id="install_from_pypi"></a>Using PyPI
 
 ```bash
 pip install flycraft
 ```
 
-### From source
+### <a id="install_from_source"></a>From source
 
 ```bash
 git clone https://github.com/GongXudong/fly-craft.git
 pip install -e fly-craft
 ```
 
-***NOTE***: Due to the use of dynamic libraries "\*.so"/"\*.dll", FlyCraft can only be used on Linux or Windows. As we have conducted comprehensive testing on Linux systems, we recommend deploying FlyCraft in one of the following environments: (1) a native Linux operating system, (2) a Linux subsystem activated via Windows WSL, or (3) a Linux container initiated through Docker on macOS/Windows.
+***NOTE***: Due to the use of dynamic libraries "\*.so"/"\*.dll", FlyCraft can only be used on **Linux** or **Windows**. As we have conducted comprehensive testing on Linux systems, we recommend deploying FlyCraft in one of the following environments:
 
-## Usage
+* a native Linux operating system,
+* a Linux subsystem activated via **Windows WSL**,
+* a Linux container initiated through **Docker** on macOS/Windows.
 
-### Basic usage
+## <a id="usage"></a>Usage
+
+### <a id="usage_basic"></a>Basic usage
 
 ```python
 import gymnasium as gym
@@ -59,7 +98,7 @@ for _ in range(500):
 env.close()
 ```
 
-### The four methods to initialize environment
+### <a id="usage_initialize_env"></a>The four methods to initialize environment
 
 ```python
 # 1.Initialize environment with default configurations
@@ -90,19 +129,19 @@ env = gym.make(
 )
 ```
 
-### Visualization
+### <a id="usage_visualization"></a>Visualization
 
 We provide a visualization method based on [Tacview](https://www.tacview.net/). For more details, please refer to [fly-craft-examples](https://github.com/GongXudong/fly-craft-examples).
 
-## Applications
+## <a id="applications"></a>Applications
 
-### Application examples
+### <a id="application_examples"></a>Application examples
 
 1. We provide a sister repository, [fly-craft-examples](https://github.com/GongXudong/fly-craft-examples), for flycraft, which offers a variety of training scripts based on [StableBaselines3](https://github.com/DLR-RM/stable-baselines3) and [Imitation](https://github.com/HumanCompatibleAI/imitation).
 
-### Researches on FlyCraft
+### <a id="application_papers"></a>Researches on FlyCraft
 
-1. Xudong, Gong, et al. "***Improving the Continuity of Goal-Achievement Ability via Policy Self-Regularization for Goal-Conditioned Reinforcement Learning***." Forty-second International Conference on Machine Learning. **ICML, 2025**. [[Paper]]()
+1. Xudong, Gong, et al. "***Improving the Continuity of Goal-Achievement Ability via Policy Self-Regularization for Goal-Conditioned Reinforcement Learning***." Forty-second International Conference on Machine Learning. **ICML, 2025**. [[Paper]](https://openreview.net/forum?id=xPMDwGL1TT)
 
 2. Xudong, Gong, et al. "***VVC-Gym: A Fixed-Wing UAV Reinforcement Learning Environment for Multi-Goal Long-Horizon Problems***." International Conference on Learning Representations. **ICLR, 2025**. [[Paper]](https://openreview.net/forum?id=5xSRg3eYZz)
 
@@ -110,19 +149,19 @@ We provide a visualization method based on [Tacview](https://www.tacview.net/). 
 
 4. Xudong, Gong, et al. "***Goal-Conditioned On-Policy Reinforcement Learning***." Advances in Neural Information Processing Systems. **NeurIPS, 2024**. [[Paper]](https://openreview.net/pdf?id=KP7EUORJYI)
 
-5. Xudong, Gong, et al. "***V-Pilot: A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations***." IEEE International Conference on Robotics and Automation. **ICRA, 2025**.
+5. Xudong, Gong, et al. "***V-Pilot: A Velocity Vector Control Agent for Fixed-Wing UAVs from Imperfect Demonstrations***." IEEE International Conference on Robotics and Automation. **ICRA, 2025**. [[Paper]](https://ieeexplore.ieee.org/abstract/document/11128340/?casa_token=oHHVxdPUdVgAAAAA:5-us3vYs2S9S3fmyG-MnIuSponSWXJERUIEhLX845aukeXRcjN_CrYqVaK9reMbFK7ZsTBu-)
 
-6. Dawei, Feng, et al. "***Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies***." IEEE International Symposium on Parallel and Distributed Processing with Applications. **ISPA, 2024**.
+6. Dawei, Feng, et al. "***Think Before Acting: The Necessity of Endowing Robot Terminals With the Ability to Fine-Tune Reinforcement Learning Policies***." IEEE International Symposium on Parallel and Distributed Processing with Applications. **ISPA, 2024**. [[Paper]](https://ieeexplore.ieee.org/abstract/document/10885338/?casa_token=esVIEpSIOPIAAAAA:sgPFMD6RXQ8PNfaMVXdv8x6Ci1c5bRuxzV5yaxJQLxn6gByhoFpFseEl7CcjV61pt71L76-hOA)
 
-## Architecture
+## <a id="architecture"></a>Architecture
 
 ![Architecture](assets/framework.png)
 
-## Configuration Details
+## <a id="config"></a>Configuration Details
 
 [Here](https://github.com/GongXudong/fly-craft/tree/main/flycraft/configs/MR_for_HER.json) is an example of the configuration, which consists of 4 blocks:
 
-### Task
+### <a id="config_task"></a>Task
 
 The configurations about task and simulator, including:
 
@@ -132,7 +171,7 @@ The configurations about task and simulator, including:
 * **h0** Int (m): initial altitude of the aircraft.
 * **v0** Int (m/s): initial true air speed of the aircraft.
 
-### Desired Goal
+### <a id="config_dg"></a>Desired Goal
 
 The configurations about the definition and sampling method of the desired goal, including:
 
@@ -151,7 +190,7 @@ The configurations about the definition and sampling method of the desired goal,
 * **sample_reachable_goal** Boolean: when sampling desired goals from *available_goals_file*, should only those desired goals with length>0 be sampled.
 * **sample_goal_noise_std** Tuple[Float]: a tuple with three float. The standard deviation used to add Gaussian noise to the true air speed, flight path elevation angle, and flight path azimuth angle of the sampled desired goal.
 
-### Rewards
+### <a id="config_reward"></a>Rewards
 
 The configurations about rewards, including:
 
@@ -169,7 +208,7 @@ The configurations about rewards, including:
   * *use* Boolean: whether use this reward;
   * *reward_constant* Float: the reward when achieving the desired goal.
 
-### Terminations
+### <a id="config_terminations"></a>Terminations
 
 The configurations about termination conditions, including:
 
@@ -223,7 +262,7 @@ The configurations about termination conditions, including:
   * *is_termination_reward_based_on_steps_left* Boolean: whether calculate the reward (penalty) based on the max_episode_step and the current steps;
   * *termination_reward* Float: the reward when triggers this termination under the condition of 'is_termination_reward_based_on_steps_left == False'.
 
-### Cases
+### <a id="config_cases"></a>Cases
 
 1. Using fixed desired goal of $(u, \mu, \chi) = (100, -25, 75)$, [link](https://github.com/GongXudong/fly-craft-examples/blob/main/configs/env/fixed_target/env_config_for_ppo_100_-25_75.json).
 
@@ -231,13 +270,13 @@ The configurations about termination conditions, including:
 
 3. Sampling desired goal $(u, \mu, \chi)$ randomly from a pre-defined set (specified by config["goal"]["available_goals_file"]), [link](https://github.com/GongXudong/fly-craft-examples/blob/main/configs/env/IRPO/env_hard_guidance_MR_config_for_ppo_with_dg_from_demo1.json).
 
-## Research Areas supported by FlyCraft
+## <a id="research_area"></a>Research Areas supported by FlyCraft
 
-### 1. Goal-Conditioned Reinforcement Learning
+### <a id="research_area_gcrl"></a>1. Goal-Conditioned Reinforcement Learning
 
 FlyCraft is a typical multi-goal problem. Its interface adheres to the design principles of [Gymnasium-Robotics](https://github.com/Farama-Foundation/Gymnasium-Robotics). The observation is implemented using a dictionary type, which includes three keys: "*observation*", "*desired\_goal*", and "*achieved\_goal*". Additionally, it provides a *compute\_reward()* function. This design makes Flycraft compatible with many open-source Goal-Centric Reinforcement Learning (GCRL) algorithms, facilitating the direct reuse of these algorithms for GCRL research.
 
-### 2. Demonstration-based Reinforcement learning (Imitation Learning, Offline Reinforcement Learning, Offline-to-Online Reinforcement Learning)
+### <a id="research_area_rlfd"></a>2. Demonstration-based Reinforcement learning (Imitation Learning, Offline Reinforcement Learning, Offline-to-Online Reinforcement Learning)
 
 We provide scripts for generating demonstration data using PID controllers and for updating demonstrations using trained RL policies. Users can utilize these scripts to generate their own demonstrations. Additionally, we have open-sourced eight datasets of varying quality and quantity, as listed below:
 
@@ -254,7 +293,7 @@ We provide scripts for generating demonstration data using PID controllers and f
 
 For the specific details on how the datasets were generated, please refer to our ICLR 2025 paper: [VVCGym](https://openreview.net/pdf?id=5xSRg3eYZz).
 
-### 3. Exploration
+### <a id="research_area_exploration"></a>3. Exploration
 
 FlyCraft represents a typical exploration challenge problem, primarily due to the following complexities:
 
@@ -264,7 +303,7 @@ FlyCraft represents a typical exploration challenge problem, primarily due to th
 
 Furthermore, directly applying common RL algorithms like PPO or SAC on FlyCraft, even with dense rewards, yields policies with virtually no beneficial effect. Detailed experimental results are available in our ICLR 2025 paper: [VVCGym](https://openreview.net/pdf?id=5xSRg3eYZz).
 
-### 4. Curriculum Learning
+### <a id="research_area_curriculum"></a>4. Curriculum Learning
 
 Since common RL algorithms struggle to learn from scratch on FlyCraft, it serves as an suitable testbed for researching Curriculum Learning.
 
@@ -292,17 +331,17 @@ Different action spaces can be employed by setting env_config["task"]["control_m
 
 A related Curriculum Learning study can be found in the NeurIPS 2024 paper: [GCPO](https://openreview.net/pdf?id=KP7EUORJYI).
 
-### 5. Hierarchical Reinforcement Learning
+### <a id="research_area_hierarchical"></a>5. Hierarchical Reinforcement Learning
 
 The long-horizon nature of fixed-wing UAV tasks makes FlyCraft a suitable testbed for Hierarchical RL research. The task horizon can be adjusted by setting the simulation frequency env_config["task"]["step_frequence"]. We recommend setting the simulation frequency within the range of [10, 100], where a higher value corresponds to a longer task horizon.
 
 For researchers wishing to avoid the long-horizon challenge, we suggest: (1) setting env_config["task"]["step_frequence"] to 10; (2) employing FrameSkip techniques.
 
-### 6. Continual Learning
+### <a id="research_area_continual"></a>6. Continual Learning
 
 Users can refer to the methods for modifying task difficulty described in the Curriculum Learning section to create different MDPs, thereby facilitating research in Continual Learning.
 
-### 7. Applications of Fixed-Wing UAVs
+### <a id="research_area_applications"></a>7. Applications of Fixed-Wing UAVs
 
 FlyCraft is fundamentally a simulation engine for fixed-wing UAVs. It allows researchers to study various fixed-wing UAV control problems by defining specific tasks. Currently, we have implemented:
 
@@ -311,7 +350,156 @@ FlyCraft is fundamentally a simulation engine for fixed-wing UAVs. It allows res
 
 Potential future tasks include Basic Flight Maneuvers (BFMs) such as Level Turn, Slow Roll, and Knife Edge, among others.
 
-## Citation
+In the next section, we use **Level Turn** as an example to demonstrate how to customize FlyCraft for the tasks you are concerned with.
+
+## <a id="customize_task"></a>Customize FlyCraft with Your Tasks
+
+In this section, we use the level turn in the BFM as an example to demonstrate how to customize FlyCraft for your specific tasks.
+
+### <a id="customize_task_def_task"></a>1. Define your customized task
+
+In the directory `flycraft/tasks/`, define your task, for example, in the file `BFM_level_turn_task.py`. In this file, you need to:
+
+* **Define state**:
+  1. Define the state variables via the function *get_state_vars()*.
+  2. Extract the state variables defined by get_state_vars() from the aircraft's dictionary-form state using *convert_dict_to_state_vars()*.
+  3. Define the lower bounds of the observed quantities via the function *get_state_lower_bounds()*, and define the upper bounds via the function *get_state_upper_bounds()*.
+  4. For all available keys, please refer to the keys in the dictionary provided below:
+
+  ```python
+  Dict: {
+    'lef': 0.0, 
+    'npos': 202.93280838546622, 
+    'epos': -0.0003178369761097856, 
+    'h': 4997.945252461648, 
+    'alpha': -3.8763871428920833, 
+    'beta': 0.0028827414834535683, 
+    'phi': -0.0007924768497675406, 
+    'theta': -6.5392414504888485, 
+    'psi': -0.003222236733571302, 
+    'p': 0.0012092603223480781, 
+    'q': -2.301811791467605, 
+    'r': 0.0018719855098707125, 
+    'v': 206.42898450413645, 
+    'vn': 206.23466760853253, 
+    've': -0.0014038370582571266, 
+    'vh': -9.591781654339009, 
+    'nx': 0.6544365026301127, 
+    'ny': -0.00026289226844918224, 
+    'nz': -0.8983464478861598, 
+    'ele': -3.725121874665151, 
+    'ail': -0.0017574644108460835, 
+    'rud': -0.003584270151159641, 
+    'thrust': 1.0, 
+    'lon': 122.42499999666104, 
+    'lat': 31.426828065405605, 
+    'mu': -2.126962766563186, 
+    'chi': -0.00031410986307750424
+  }
+  ```
+
+* **Define desired goal**
+  1. Define the goal via the function *get_goal_vars()*. All available keys are the same as those mentioned above.
+  2. Define the lower bound of the desired goal via the function *get_goal_lower_bounds()*, and define the upper bound via the function *get_goal_upper_bounds()*.
+  3. Define how to obtain the achieved goal corresponding to the current state via the function *get_achieved_goal()*.
+
+* **Define termination functions**
+  1. Define your customized termination functions in the directory `flycraft/terminations`. For example, `extreme_state_termination.py` represents terminating an episode when the aircraft reaches extreme velocities or extreme angular velocities.
+  2. Define the specific configuration for your customized termination function in the config file. For the `extreme_state_termination.py` mentioned above, the configuration can be as follows:
+
+  ```python
+  {
+    ...
+    "terminations": {
+      ...
+      "ES": {
+        "use": True,
+        "v_max": 400,
+        "p_max": 300,
+        "is_termination_reward_based_on_steps_left": True,
+        "termination_reward": -1,
+      },
+    }
+  }
+  ```
+
+  3. Define how to parse your customized termination function in the function `_prep_termination_funcs()`. For example, the aforementioned `extreme_state_termination.py` can be parsed in the following manner:
+
+  ```python
+  ...
+  elif tmnt == "ES":
+    self.termination_funcs.append(
+      ExtremeStateTermination(
+        v_max=tmp_cfg["v_max"],
+        p_max=tmp_cfg["p_max"],
+        is_termination_reward_based_on_steps_left=tmp_cfg["is_termination_reward_based_on_steps_left"],
+        termination_reward=tmp_cfg["termination_reward"],
+        env_config=self.config,
+      )
+    )
+  ```
+
+  4. Define how to determine whether an episode has ended based on your customized termination function in the function `is_success()`.
+
+* **Define reward functions**
+  1. Define your customized reward functions in the directory `flycraft/rewards`. For example, `for_BFM_level_turn/dense_reward_based_on_velocity_chi.py`.
+  2. Define the specific settings for your customized reward function in the configuration file. For example, regarding the aforementioned `for_BFM_level_turn/dense_reward_based_on_velocity_chi.py`, you can have the following configuration: 
+
+  ```python
+  {
+    ...
+    "rewards": {
+      "dense": {
+        "use": True,
+        "b": 0.5
+      },
+    },
+  }
+  ```
+
+  3. Define how to parse your customized reward function in the function *_prep_reward_funcs()*. For example, the aforementioned `for_BFM_level_turn/dense_reward_based_on_velocity_chi.py` can be parsed in the following manner:
+
+  ```python
+  ...
+  if rwd == "dense":
+    self.reward_funcs.append(
+      DenseRewardBasedOnAngleAndVelocity(
+        b=tmp_cfg.get("b", 0.5),
+        mu_tolerance=tmp_cfg.get("mu_tolerance", 180),
+        chi_scale=tmp_cfg.get("chi_scale", 180),
+        velocity_scale=tmp_cfg.get("velocity_scale", 100),
+        chi_weight=tmp_cfg.get("chi_weight", 0.5),
+      )
+  )
+  ```
+
+  4. Define how to determine whether an episode has ended based on your customized termination function in the function *is_success()*.
+
+### <a id="customize_task_def_env"></a>2. Define your customized environment
+
+In the same directory as `flycraft/env.py`, create a new file, for example, reference `env.py` to create your customized environment `env_level_turn.py`. Compared to `env.py`, this file requires very few modifications—essentially, you only need to change *VelocityVectorControlTask* to *BFMLevelTurnTask*.
+
+### 3. <a id="customize_task_register_env"></a>Register your customized environment
+
+Register your customized environment in `flycraft/__init__.py`.
+
+```python
+register(
+    id="FlyCraft-Level-Turn-v0",
+    entry_point="flycraft.env_level_turn:FlyCraftLevelTurnEnv",
+)
+```
+
+### 4. <a id="customize_task_run"></a>Test/Run your customized environment
+
+```python
+env = gym.make("FlyCraft-Level-Turn-v0")
+...
+```
+
+**NOTE**: *If your task has been thoroughly tested, feel free to submit a Pull Request to us. We will integrate your task into FlyCraft and release a new PyPI package.*
+
+## <a id="citation"></a>Citation
 
 Cite as
 

@@ -405,7 +405,7 @@ class BFMLevelTurnTask(Task):
         return namedtuple("goal_vars", ["v", "chi"])
     
     @staticmethod
-    def convert_dict_to_state_vars(state_dict:dict) -> namedtuple:
+    def convert_dict_to_state_vars(state_dict: dict) -> namedtuple:
         """将仿真器返回的字典类型观测转换为环境定义的观测(BFMLevelTurnTask.get_state_vars()定义的namedtuple)
 
         Args:

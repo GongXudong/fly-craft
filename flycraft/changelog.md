@@ -1,6 +1,11 @@
 # Change logs
 
-current version: 0.1.9
+current version: 0.2.0
+
+## 0.2.0
+
+1. Add level turn task (task id: "FlyCraft-Level-Turn-v0").
+2. Add a section in README.md describing how to define custom tasks and environments.
 
 ## 0.1.9
 

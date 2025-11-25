@@ -4,6 +4,7 @@ _build/
 build/
 *.egg-info
 dist/
+.coverage
 
 flycraft/planes/utils/logs/
 f16trace.csv
